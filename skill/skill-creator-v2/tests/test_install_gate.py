@@ -61,4 +61,3 @@ def test_exact_pin_with_integrity_auto_approves():
     decision = decide("safe-tool", "1.2.3", ALLOWLIST, BLOCKLIST)
     assert decision.tier == "auto"
     assert decision.approved
-

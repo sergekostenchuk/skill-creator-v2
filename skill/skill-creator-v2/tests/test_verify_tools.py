@@ -63,4 +63,3 @@ def test_env_presence_check_does_not_capture_secret_value(monkeypatch):
     assert report["results"][0]["status"] == "verified"
     assert "super-secret-value" not in evidence
     assert "value was not read" in evidence
-

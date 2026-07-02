@@ -19,4 +19,3 @@ Use verify_tools.py.
 ## Final Review
 
 Use review.json.
-

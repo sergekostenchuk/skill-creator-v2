@@ -40,4 +40,3 @@ Success requires evidence:
 - Explicit skipped-check records when a gate is intentionally not run.
 
 Never convert a planned command into evidence. If a check was not run, say `not_run` and explain why.
-

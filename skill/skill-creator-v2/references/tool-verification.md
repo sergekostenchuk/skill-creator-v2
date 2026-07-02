@@ -62,4 +62,3 @@ Hard-block:
 ## Secret Handling
 
 It is acceptable to check whether an environment variable exists. Never print, copy, or store its value in reports, evals, plans, or wiki pages.
-

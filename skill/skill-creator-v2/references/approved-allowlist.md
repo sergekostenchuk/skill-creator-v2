@@ -14,4 +14,3 @@ Auto-approval requires:
 Anything else requires manual approval or is hard-blocked.
 
 The allowlist is intentionally small and conservative. A popular package can still be compromised at a specific version, so name recognition alone is not enough.
-

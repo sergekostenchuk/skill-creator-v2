@@ -9,45 +9,44 @@ release_decision:
 
 ## Files Changed
 
-- 
+-
 
 ## Tools And Dependencies
 
 verified:
-- 
+-
 
 assumed:
-- 
+-
 
 missing:
-- 
+-
 
 fallback:
-- 
+-
 
 manual_approval_required:
-- 
+-
 
 hard_blocked:
-- 
+-
 
 ## Checks Run
 
-- 
+-
 
 ## Eval Results
 
-- 
+-
 
 ## Skipped Gates
 
-- 
+-
 
 ## Unresolved Risks
 
-- 
+-
 
 ## Rollback
 
-- 
-
+-

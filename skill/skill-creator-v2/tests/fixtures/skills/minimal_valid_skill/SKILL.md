@@ -24,4 +24,3 @@ Retry limits are finite and failures escalate.
 ## Evidence Rule
 
 Every success claim must cite a file, command output, or review artifact.
-

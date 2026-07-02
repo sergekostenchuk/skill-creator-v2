@@ -67,4 +67,3 @@ A release-grade skill must score at least 9/10 in every applicable category and 
 - Evidence integrity.
 
 No score may rely on planned commands, fake outputs, missing fixtures, or unevaluated impressions.
-
