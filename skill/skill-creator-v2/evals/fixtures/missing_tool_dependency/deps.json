@@ -1,0 +1,8 @@
+[
+  {
+    "name": "firecrawl-mcp",
+    "category": "mcp_server",
+    "used_for": "rendering and extracting content from JavaScript-heavy design gallery sites",
+    "fallback": "text-only fetch with explicit visual-content limitation warning"
+  }
+]

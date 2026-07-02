@@ -1,0 +1,18 @@
+[
+  {
+    "query": "turn the last 12 merged PRs into release notes with breaking changes called out",
+    "should_trigger": true
+  },
+  {
+    "query": "write a git commit message for this diff",
+    "should_trigger": false
+  },
+  {
+    "query": "summarize these customer support tickets into a changelog-style email",
+    "should_trigger": false
+  },
+  {
+    "query": "prepare release notes for v2.4 from the issue list and git log",
+    "should_trigger": true
+  }
+]

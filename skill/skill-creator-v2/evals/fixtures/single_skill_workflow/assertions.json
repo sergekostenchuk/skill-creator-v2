@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ME-001-A1",
+    "text": "The output defines a single skill, not a skill group or orchestrator-worker system.",
+    "evidence_required": "SKILL.md or file tree shows one skill only.",
+    "failure_mode": "overprocessed_simple_request",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-001-A2",
+    "text": "The skill includes explicit input and output format requirements.",
+    "evidence_required": "SKILL.md contains input and output sections or equivalent instructions.",
+    "failure_mode": "partial_output",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-001-A3",
+    "text": "The skill proposes at least two realistic eval prompts.",
+    "evidence_required": "Eval prompts are present and match the meeting-notes workflow.",
+    "failure_mode": "validation_failed",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  }
+]

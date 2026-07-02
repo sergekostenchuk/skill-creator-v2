@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ME-013-A1",
+    "text": "Contract rejects file existence as final acceptance.",
+    "failure_mode": "artifact_existence_accepted"
+  },
+  {
+    "id": "ME-013-A2",
+    "text": "Final review rejects files-only completion.",
+    "failure_mode": "missing_final_review_gate"
+  },
+  {
+    "id": "ME-013-A3",
+    "text": "The sample result requires executed checks and review evidence.",
+    "failure_mode": "missing_verification"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ME-012-A1",
+    "text": "Orchestrator-worker contract contains Completion Vs Acceptance.",
+    "failure_mode": "missing_completion_acceptance_gate"
+  },
+  {
+    "id": "ME-012-A2",
+    "text": "The contract separates completion, artifact, review, verification, and final acceptance.",
+    "failure_mode": "worker_completion_conflated_with_acceptance"
+  },
+  {
+    "id": "ME-012-A3",
+    "text": "Worker completion alone is rejected as final acceptance.",
+    "failure_mode": "worker_completion_accepted_without_evidence"
+  }
+]

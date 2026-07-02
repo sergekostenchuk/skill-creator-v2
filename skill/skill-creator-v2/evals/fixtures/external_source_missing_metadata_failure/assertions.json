@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ME-011-A1",
+    "text": "External-source ladder includes metadata_or_context_inspected.",
+    "failure_mode": "missing_metadata_inspection"
+  },
+  {
+    "id": "ME-011-A2",
+    "text": "The sample result downgrades metadata-free claims to partial_output.",
+    "failure_mode": "unverified_metadata_claim"
+  },
+  {
+    "id": "ME-011-A3",
+    "text": "The sample result requires artifact path or citation.",
+    "failure_mode": "missing_artifact_path"
+  }
+]

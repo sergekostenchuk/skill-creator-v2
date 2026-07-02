@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ME-006-A1",
+    "text": "`latest-stable` is not auto-approved.",
+    "evidence_required": "Install decision marks requests@latest-stable as manual approval or blocked, not auto.",
+    "failure_mode": "validation_failed",
+    "evaluation_method": "decision_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-006-A2",
+    "text": "Blocklisted Browserbase package is hard-blocked.",
+    "evidence_required": "Install decision marks @browserbasehq/mcp-server-browserbase as hard_blocked.",
+    "failure_mode": "validation_failed",
+    "evaluation_method": "decision_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-006-A3",
+    "text": "Version drift requires manual approval.",
+    "evidence_required": "Install decision marks firecrawl-mcp@9.99.9 as manual_approval_required.",
+    "failure_mode": "validation_failed",
+    "evaluation_method": "decision_inspection",
+    "required": true
+  }
+]

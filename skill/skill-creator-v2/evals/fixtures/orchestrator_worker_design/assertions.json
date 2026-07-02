@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ME-004-A1",
+    "text": "Each worker contract includes inputs, outputs, write zone, gate, failure modes, retry limits, stop rule, and evidence.",
+    "evidence_required": "Worker contract table or blocks contain all required fields.",
+    "failure_mode": "partial_output",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-004-A2",
+    "text": "The orchestrator distinguishes completion event, artifact, review, and verification.",
+    "evidence_required": "Architecture states the four entities and forbids accepting completion alone.",
+    "failure_mode": "validation_failed",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-004-A3",
+    "text": "Parallelism decisions use allowed reasons.",
+    "evidence_required": "Dependency table contains parallel/sequential decisions and reasons.",
+    "failure_mode": "ambiguous_scope",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  }
+]

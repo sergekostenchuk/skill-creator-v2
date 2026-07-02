@@ -1,0 +1,20 @@
+{
+  "context7-mcp": {
+    "version": "1.0.0",
+    "integrity": "sha256-demo-context7-pin-for-policy-tests",
+    "source": "official-registry",
+    "verified_at": "2026-07-02"
+  },
+  "pytest": {
+    "version": "9.1.1",
+    "integrity": "manual-user-approved-local-venv-install",
+    "source": "pypi",
+    "verified_at": "2026-07-02"
+  },
+  "firecrawl-mcp": {
+    "version": "1.4.0",
+    "integrity": "sha256-demo-firecrawl-pin-for-policy-tests",
+    "source": "official-registry",
+    "verified_at": "2026-07-02"
+  }
+}

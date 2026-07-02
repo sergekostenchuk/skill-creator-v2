@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ME-014-A1",
+    "text": "Skill Group Observability Contract includes required artifact/status fields.",
+    "failure_mode": "missing_observability_contract"
+  },
+  {
+    "id": "ME-014-A2",
+    "text": "Behavioral pressure tests reject missing observability artifacts.",
+    "failure_mode": "missing_observability_eval"
+  },
+  {
+    "id": "ME-014-A3",
+    "text": "The sample result rejects missing artifact manifest and status evidence.",
+    "failure_mode": "observability_gap_accepted"
+  }
+]

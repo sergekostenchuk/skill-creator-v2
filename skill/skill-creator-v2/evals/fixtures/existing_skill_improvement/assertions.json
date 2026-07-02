@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ME-002-A1",
+    "text": "The original skill name is preserved.",
+    "evidence_required": "Improved SKILL.md frontmatter uses name: changelog-helper.",
+    "failure_mode": "regression",
+    "evaluation_method": "frontmatter_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-002-A2",
+    "text": "The output includes a baseline or old-skill comparison plan.",
+    "evidence_required": "Workspace or plan references old_skill/baseline comparison.",
+    "failure_mode": "missing_baseline",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-002-A3",
+    "text": "The improved skill defines eval prompts or equivalent validation.",
+    "evidence_required": "Eval prompts/assertions are present.",
+    "failure_mode": "validation_failed",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  }
+]

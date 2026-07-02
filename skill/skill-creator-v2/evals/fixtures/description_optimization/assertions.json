@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ME-007-A1",
+    "text": "The trigger eval set includes both positive and near-miss negative prompts.",
+    "evidence_required": "Trigger eval JSON contains should_trigger true and false examples with adjacent domains.",
+    "failure_mode": "validation_failed",
+    "evaluation_method": "json_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-007-A2",
+    "text": "The output reports trigger precision and recall or an explicit plan to compute them.",
+    "evidence_required": "Report includes precision/recall fields or commands to compute them.",
+    "failure_mode": "partial_output",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-007-A3",
+    "text": "Held-out results are separated from training results.",
+    "evidence_required": "Report or files distinguish train and held-out/test eval sets.",
+    "failure_mode": "overfit_eval",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  }
+]

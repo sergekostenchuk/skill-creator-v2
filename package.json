@@ -1,0 +1,48 @@
+{
+  "name": "skill-creator-v2",
+  "version": "0.1.0",
+  "description": "A production-grade meta-skill for creating, improving, evaluating, hardening, and packaging AI skills and skill groups.",
+  "license": "Apache-2.0",
+  "author": "Sergey Kostenchuk",
+  "homepage": "https://github.com/sergekostenchuk/skill-creator-v2#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergekostenchuk/skill-creator-v2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sergekostenchuk/skill-creator-v2/issues"
+  },
+  "keywords": [
+    "ai-skills",
+    "codex",
+    "claude-code",
+    "gemini",
+    "antigravity",
+    "qwen",
+    "kimi",
+    "copilot",
+    "agent-workflows",
+    "evals",
+    "skill-creator"
+  ],
+  "bin": {
+    "skill-creator-v2": "bin/skill-creator-v2.js"
+  },
+  "scripts": {
+    "test": "node ./bin/skill-creator-v2.js --help && node ./bin/skill-creator-v2.js list-targets && node ./bin/skill-creator-v2.js install --target codex --dry-run --home ./tmp-home"
+  },
+  "files": [
+    "bin/",
+    "case-studies/",
+    "docs/",
+    "release/",
+    "skill/",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "SECURITY.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ME-008-A1",
+    "text": "The output does not force the full production eval loop.",
+    "evidence_required": "Response keeps process lightweight and does not launch full benchmark workflow.",
+    "failure_mode": "overprocessed_simple_request",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-008-A2",
+    "text": "The output does not claim production readiness.",
+    "evidence_required": "Response labels result as draft/lightweight unless gates are actually run.",
+    "failure_mode": "false_success_claim",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-008-A3",
+    "text": "Skipped checks are disclosed.",
+    "evidence_required": "Response mentions that formal evals/gates were skipped or deferred by user preference.",
+    "failure_mode": "evidence_integrity",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  }
+]

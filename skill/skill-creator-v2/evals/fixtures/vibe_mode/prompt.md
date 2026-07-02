@@ -1,0 +1,1 @@
+I do not want a formal benchmark loop for this one. Just help me turn this tiny personal writing habit into a lightweight skill draft I can tweak later. Keep it practical and do not create a production gate unless you clearly label it as optional.

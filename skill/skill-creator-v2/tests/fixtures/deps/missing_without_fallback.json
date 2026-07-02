@@ -1,0 +1,9 @@
+[
+  {
+    "name": "private-mcp",
+    "category": "mcp",
+    "used_for": "private data access",
+    "required": true
+  }
+]
+

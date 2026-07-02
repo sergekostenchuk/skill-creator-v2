@@ -1,0 +1,19 @@
+{
+  "skill_name": "example-skill",
+  "evals": [
+    {
+      "id": "ME-001",
+      "prompt": "Realistic user prompt",
+      "expected_output": "Expected successful output",
+      "files": [],
+      "expectations": [
+        {
+          "text": "The output cites evidence for every external claim.",
+          "failure_mode": "hallucinated_source",
+          "evidence_required": "artifact path, command output, fetched content, or review evidence"
+        }
+      ]
+    }
+  ]
+}
+

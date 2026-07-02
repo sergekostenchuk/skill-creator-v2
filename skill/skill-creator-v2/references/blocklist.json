@@ -1,0 +1,17 @@
+{
+  "evil-package": {
+    "reason": "Fixture package used to test hard-block behavior.",
+    "action": "Do not install."
+  },
+  "requests": {
+    "blocked_versions": [
+      "latest-stable"
+    ],
+    "reason": "Fixture entry: latest-stable is not a real pinned trusted version.",
+    "action": "Require manual approval with exact version and integrity."
+  },
+  "@browserbasehq/mcp-server-browserbase": {
+    "reason": "Fixture entry used to verify hard-block precedence.",
+    "action": "Do not install automatically."
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "skill_name": "skill-creator-v2",
+  "evals": [
+    {
+      "id": "ME-001",
+      "name": "single-skill-workflow",
+      "prompt_file": "evals/fixtures/single_skill_workflow/prompt.md",
+      "assertions_file": "evals/fixtures/single_skill_workflow/assertions.json"
+    },
+    {
+      "id": "ME-009",
+      "name": "external-source-catalog-only-failure",
+      "prompt_file": "evals/fixtures/external_source_catalog_only_failure/prompt.md",
+      "assertions_file": "evals/fixtures/external_source_catalog_only_failure/assertions.json"
+    },
+    {
+      "id": "ME-010",
+      "name": "external-source-hero-only-failure",
+      "prompt_file": "evals/fixtures/external_source_hero_only_failure/prompt.md",
+      "assertions_file": "evals/fixtures/external_source_hero_only_failure/assertions.json"
+    },
+    {
+      "id": "ME-011",
+      "name": "external-source-missing-metadata-failure",
+      "prompt_file": "evals/fixtures/external_source_missing_metadata_failure/prompt.md",
+      "assertions_file": "evals/fixtures/external_source_missing_metadata_failure/assertions.json"
+    },
+    {
+      "id": "ME-012",
+      "name": "worker-completed-without-evidence",
+      "prompt_file": "evals/fixtures/worker_completed_without_evidence/prompt.md",
+      "assertions_file": "evals/fixtures/worker_completed_without_evidence/assertions.json"
+    },
+    {
+      "id": "ME-013",
+      "name": "artifact-exists-without-verification",
+      "prompt_file": "evals/fixtures/artifact_exists_without_verification/prompt.md",
+      "assertions_file": "evals/fixtures/artifact_exists_without_verification/assertions.json"
+    },
+    {
+      "id": "ME-014",
+      "name": "missing-skill-group-observability",
+      "prompt_file": "evals/fixtures/missing_skill_group_observability/prompt.md",
+      "assertions_file": "evals/fixtures/missing_skill_group_observability/assertions.json"
+    },
+    {
+      "id": "ME-015",
+      "name": "simple-local-task-overprocessing",
+      "prompt_file": "evals/fixtures/simple_local_task_overprocessing/prompt.md",
+      "assertions_file": "evals/fixtures/simple_local_task_overprocessing/assertions.json"
+    }
+  ]
+}

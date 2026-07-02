@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ME-010-A1",
+    "text": "Shallow evidence anti-pattern rejects hero-only full visual review.",
+    "failure_mode": "hero_only_review_accepted"
+  },
+  {
+    "id": "ME-010-A2",
+    "text": "The sample result marks hero-only review as partial_output.",
+    "failure_mode": "missing_partial_output_label"
+  },
+  {
+    "id": "ME-010-A3",
+    "text": "The sample result requires scroll_sequence_captured or interaction_captured.",
+    "failure_mode": "missing_evidence_depth_requirement"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "name": "requests",
+    "version": "latest-stable",
+    "registry": "pypi"
+  },
+  {
+    "name": "@browserbasehq/mcp-server-browserbase",
+    "version": "2.4.2",
+    "registry": "npm"
+  },
+  {
+    "name": "firecrawl-mcp",
+    "version": "9.99.9",
+    "registry": "npm"
+  }
+]

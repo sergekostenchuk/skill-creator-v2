@@ -1,0 +1,10 @@
+[
+  {
+    "name": "firecrawl",
+    "category": "mcp",
+    "used_for": "crawl pages",
+    "required": true,
+    "fallback": "use browser/search with reduced confidence"
+  }
+]
+

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ME-015-A1",
+    "text": "External-source reference preserves simple local task skip.",
+    "failure_mode": "overprocessing_simple_task"
+  },
+  {
+    "id": "ME-015-A2",
+    "text": "SKILL.md keeps vibe mode lightweight and honest.",
+    "failure_mode": "vibe_mode_overhardened"
+  },
+  {
+    "id": "ME-015-A3",
+    "text": "The sample output skips heavy evidence ladder for tiny local task.",
+    "failure_mode": "unnecessary_external_source_ladder"
+  }
+]

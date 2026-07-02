@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ME-005-A1",
+    "text": "The dependency is declared and must be verified before use.",
+    "evidence_required": "Dependency manifest or SKILL.md lists firecrawl-mcp and verification method.",
+    "failure_mode": "tool_unavailable",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-005-A2",
+    "text": "The skill forbids silent fallback to weaker text-only fetching.",
+    "evidence_required": "Fallback instructions require explicit limitation disclosure.",
+    "failure_mode": "hallucinated_source",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-005-A3",
+    "text": "The skill requires evidence before claiming visual design findings.",
+    "evidence_required": "Evidence rule ties claims to fetched/rendered artifacts.",
+    "failure_mode": "hallucinated_source",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  }
+]

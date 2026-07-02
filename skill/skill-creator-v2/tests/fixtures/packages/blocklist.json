@@ -1,0 +1,11 @@
+{
+  "evil-package": {
+    "reason": "fixture blocklist package"
+  },
+  "requests": {
+    "blocked_versions": [
+      "latest-stable"
+    ],
+    "reason": "floating fixture version"
+  }
+}

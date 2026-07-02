@@ -1,0 +1,9 @@
+[
+  {
+    "name": "browser.open",
+    "category": "mcp",
+    "used_for": "browser verification",
+    "required": true
+  }
+]
+

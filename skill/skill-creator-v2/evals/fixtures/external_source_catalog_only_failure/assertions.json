@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ME-009-A1",
+    "text": "External-source reference defines a ladder and catalog_card_seen label.",
+    "failure_mode": "missing_external_source_ladder"
+  },
+  {
+    "id": "ME-009-A2",
+    "text": "Candidate/catalog-only evidence is not accepted evidence.",
+    "failure_mode": "shallow_evidence_accepted"
+  },
+  {
+    "id": "ME-009-A3",
+    "text": "The sample result downgrades catalog-only evidence to partial_output or manual review.",
+    "failure_mode": "missing_partial_output_label"
+  }
+]

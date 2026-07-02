@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ME-003-A1",
+    "text": "The output defines at least two skills with non-overlapping responsibilities.",
+    "evidence_required": "Architecture or file tree names Skill A and Skill B with different scopes.",
+    "failure_mode": "ambiguous_scope",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-003-A2",
+    "text": "Shared state and write zones are explicit.",
+    "evidence_required": "Plan lists shared references/state and per-skill write zones.",
+    "failure_mode": "write_conflict",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "ME-003-A3",
+    "text": "The group includes evals for both ingest and query behavior.",
+    "evidence_required": "Separate evals or assertions exist for both skills.",
+    "failure_mode": "partial_output",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  }
+]
