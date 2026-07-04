@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1
+
+- Publishes the post-`0.2.0` behavioral grader hardening to npm.
+- Updates canonical `release/benchmark.json` to RA-023 evidence: GitHub Actions green, 17 actual behavioral executor outputs, 51/51 assertions passed, package/runtime smoke, and native CLI smoke.
+- Adds regression coverage for behavioral grading edge cases around negated group/orchestrator language and trigger-eval labels.
+- Records remaining platform caveats honestly: installer/package smoke passed, while native auto-loading is still adapter-dependent for some runtimes.
+
 ## 0.2.0
 
 - Adds reproducible pytest runner metadata for staged and public package checks.

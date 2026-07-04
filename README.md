@@ -143,6 +143,6 @@ See [case-studies/ui-intelligence.md](case-studies/ui-intelligence.md).
 
 ## Evidence Status
 
-The package includes deterministic checks and eval fixtures. Prior local validation passed unit tests, lint, meta-evals, behavioral smoke evals, package inspection, and multi-runtime filesystem propagation checks.
+The package includes deterministic checks and eval fixtures. Current public evidence includes green GitHub Actions, unit tests, lint, taxonomy fixtures, meta-eval contract checks, 17 recorded independent behavioral executor outputs with 51/51 assertions passed, package inspection, temp-home installer smoke, npm-tarball installer smoke, and native CLI availability smoke for 7 locally available clients.
 
-Important caveat: a true 10/10 behavioral claim requires broader independent with-skill vs baseline runs across multiple fixtures. This project records that gap instead of hiding it.
+Important caveat: this proves the current public meta-eval corpus and package installer behavior. Future high-risk generated skills or skill groups still need their own behavioral eval evidence, and native skill auto-loading is adapter-dependent for some runtimes.

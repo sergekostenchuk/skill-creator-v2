@@ -1,21 +1,40 @@
 {
   "benchmark_schema": "skill-creator-v2.benchmark.v1",
-  "generated_at": "2026-07-03T23:42:29Z",
-  "run_id": "RA-021",
+  "generated_at": "2026-07-04T01:18:59.718Z",
+  "run_id": "RA-023",
   "release_candidate": {
     "skill_name": "skill-creator-v2",
-    "package_version": "0.2.0",
-    "purpose": "local gap closure before any new public publication",
-    "version_policy": "publish as v0.2.0 because GitHub v0.1.0 already exists with older public content"
+    "package_version": "0.2.1",
+    "purpose": "patch release synchronizing npm package with post-publication behavioral grader hardening and RA-023 evidence",
+    "version_policy": "publish as v0.2.1 because npm v0.2.0 was published before the post-publication grader oracle hardening commit"
+  },
+  "public_repository": {
+    "url": "https://github.com/sergekostenchuk/skill-creator-v2",
+    "evidence_commit": "1d2674dc204221c0cd9bfe236b1e2d29724920c7",
+    "evidence_commit_summary": "Add CI and harden behavioral grading",
+    "ci_workflow": ".github/workflows/test.yml",
+    "ci_run_url": "https://github.com/sergekostenchuk/skill-creator-v2/actions/runs/28689873987",
+    "ci_conclusion": "success",
+    "ci_matrix": [
+      "python-3.11 / node-20",
+      "python-3.12 / node-20"
+    ],
+    "ci_commands": [
+      "pytest",
+      "npm test --silent",
+      "npm pack --dry-run --json"
+    ]
   },
   "runtime_modes": {
     "run_all_checks": "local_release_check_runner",
-    "pytest": "local_pytest_from_pyproject",
+    "pytest": "local_pytest_from_pyproject_and_github_actions",
     "taxonomy_classification": "deterministic_fixture_validation",
-    "meta_evals": "inline_fallback",
-    "self_diagnose": "deterministic_self_diagnostic",
+    "meta_evals_static": "inline_fallback_contract_checks",
+    "self_diagnose": "deterministic_self_diagnostic_advisory",
     "platform_smoke_fixtures": "fixture_schema_validation",
-    "behavioral_independent": "not_claimed"
+    "behavioral_independent": "behavioral_recorded_outputs_multi_agent_v1",
+    "package_runtime_smoke": "temp_home_and_npm_tarball_install_smoke",
+    "native_cli_smoke": "native_cli_version_help_smoke"
   },
   "summary": {
     "release_ready_checks_passed": true,
@@ -23,11 +42,18 @@
       "passed": 8,
       "failed": 0,
       "skipped": 0,
-      "total": 8
+      "total": 8,
+      "pass_rate": 1
     },
     "pytest": {
-      "result": "37 passed",
+      "local_result": "39 passed",
+      "ci_result": "success",
       "runner_metadata": "pyproject.toml"
+    },
+    "npm": {
+      "test_result": "passed",
+      "pack_dry_run_result": "passed",
+      "target_package_version": "0.2.1"
     },
     "taxonomy_classification": {
       "passed": 14,
@@ -38,11 +64,23 @@
       "assertions_passed": 24,
       "assertions_total": 24,
       "eval_count": 8,
-      "pass_rate": 1.0
+      "pass_rate": 1,
+      "claim_level": "static_contract_check_only"
+    },
+    "behavioral_independent": {
+      "eval_run_count": 17,
+      "assertions_passed": 51,
+      "assertions_total": 51,
+      "pass_rate": 1,
+      "runtime_mode": "behavioral_recorded_outputs",
+      "executor_runtime": "multi_agent_v1",
+      "inline_fallback_counts_as_behavioral": false,
+      "missing_or_failed_runs": 0
     },
     "self_diagnose": {
       "coverage_score": 0.875,
-      "severity": "pass"
+      "severity": "pass",
+      "interpretation": "advisory coverage signal; remaining warning is meta-eval mode coverage gap for eval-benchmark and package-report"
     },
     "platform_smoke_fixtures": {
       "present": 3,
@@ -53,19 +91,68 @@
         "platform-smoke-portable"
       ]
     },
-    "skill_package_sha256": "a37fcda564d88f9ec4ed1b8befed06ab17925bdc2b3c07ccd71d6846282c6fee"
+    "package_runtime_smoke": {
+      "temp_home_install": {
+        "passed": true,
+        "target_count": 9,
+        "skill_folder_count": 14,
+        "agents_projection_count": 4,
+        "real_runtime_roots_mutated": false
+      },
+      "npm_tarball_install": {
+        "passed": true,
+        "target_count": 9,
+        "installed_skill_folder_count": 14,
+        "cli_help_contains_usage": true
+      },
+      "targets": [
+        "codex",
+        "claude-code",
+        "gemini",
+        "antigravity",
+        "vs-codium",
+        "qwen",
+        "zai-glm",
+        "kimi",
+        "github-copilot"
+      ]
+    },
+    "native_cli_smoke": {
+      "passed_count": 7,
+      "platform_count": 10,
+      "passed": [
+        "codex",
+        "claude-code",
+        "gemini",
+        "opencode",
+        "kimi",
+        "github-copilot",
+        "vs-codium"
+      ],
+      "unavailable_or_failed": [
+        "antigravity",
+        "qwen",
+        "zai-glm"
+      ],
+      "scope": "safe --version/--help availability only; not end-to-end native skill auto-loading proof"
+    }
   },
   "artifacts": {
-    "run_all_checks": "skill-creator-v2-workspace/ra-021-gap-closure/run-all-final-clean/run-all-checks.json",
-    "taxonomy_report": "skill-creator-v2-workspace/ra-021-gap-closure/run-all-final-clean/taxonomy-classification-report.json",
-    "self_diagnose_report": "skill-creator-v2-workspace/ra-021-gap-closure/run-all-final-clean/self-diagnose.json",
-    "meta_eval_report": "skill-creator-v2-workspace/ra-021-gap-closure/run-all-final-clean/meta-evals/meta-eval-report.json",
-    "skill_package": "skill-creator-v2-workspace/ra-021-gap-closure/run-all-final-clean/dist/skill-creator-v2.skill"
+    "run_all_checks": "skill-creator-v2-workspace/ra-023-ci-behavioral/run-all-staging-final/run-all-checks.json",
+    "taxonomy_report": "skill-creator-v2-workspace/ra-023-ci-behavioral/run-all-staging-final/taxonomy-classification-report.json",
+    "self_diagnose_report": "skill-creator-v2-workspace/ra-023-ci-behavioral/run-all-staging-final/self-diagnose.json",
+    "meta_eval_report": "skill-creator-v2-workspace/ra-023-ci-behavioral/run-all-staging-final/meta-evals/meta-eval-report.json",
+    "behavioral_eval_report": "skill-creator-v2-workspace/ra-023-ci-behavioral/behavioral-eval-report.json",
+    "platform_runtime_smoke_report": "skill-creator-v2-workspace/ra-023-ci-behavioral/platform-runtime-smoke-report.json",
+    "npm_tarball_smoke_report": "skill-creator-v2-workspace/ra-023-ci-behavioral/npm-tarball-smoke/npm-tarball-smoke-report.json",
+    "native_cli_smoke_report": "skill-creator-v2-workspace/ra-023-ci-behavioral/native-cli-runtime-smoke-report.json",
+    "ra023_human_report": "reports/skill-creator-v2-ra023-ci-behavioral-report.md"
   },
   "caveats": [
-    "Meta-evals are deterministic inline_fallback checks, not independent model execution.",
-    "Platform smoke fixtures prove fixture coverage and expected evidence contracts; runtime propagation evidence is recorded separately after installer apply.",
-    "OpenCode/opencode and VS Codium native support must remain adapter-needed unless separate runtime smoke evidence proves discovery.",
-    "Strict 10/10 behavioral claims still require broader independent with-skill and baseline/old-skill runs."
+    "Meta-evals still include deterministic inline_fallback contract checks; they are not counted as independent behavioral proof.",
+    "Independent behavioral proof now exists for the current public meta-eval corpus: 17 actual executor outputs and 51/51 assertions passed.",
+    "Package/runtime smoke proves installer behavior in temp-home and npm-tarball modes; it does not prove native skill auto-loading inside every client.",
+    "Native CLI smoke passed for 7/10 locally available clients; Antigravity, QWEN, and Z.AI GLM CLIs were unavailable in this environment.",
+    "Future generated-skill generalization still requires new behavioral evals for each high-risk skill or skill group."
   ]
 }

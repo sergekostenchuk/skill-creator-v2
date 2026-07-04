@@ -1,6 +1,6 @@
 {
   "name": "skill-creator-v2",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A production-grade meta-skill for creating, improving, evaluating, hardening, and packaging AI skills and skill groups.",
   "license": "Apache-2.0",
   "author": "Sergey Kostenchuk",
