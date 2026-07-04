@@ -1,5 +1,7 @@
 # Skill Creator V2
 
+[![test](https://github.com/sergekostenchuk/skill-creator-v2/actions/workflows/test.yml/badge.svg)](https://github.com/sergekostenchuk/skill-creator-v2/actions/workflows/test.yml)
+
 Skill Creator V2 is a production-grade meta-skill for creating, improving, evaluating, hardening, and packaging AI skills and skill groups.
 
 It turns skill creation from an improvised writing task into a structured engineering workflow with explicit gates for scope, dependencies, failure modes, evals, evidence, packaging, and release readiness.

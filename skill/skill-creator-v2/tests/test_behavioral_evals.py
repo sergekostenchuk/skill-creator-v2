@@ -166,6 +166,122 @@ Evals:
     assert report["inline_fallback_counts_as_behavioral"] is False
 
 
+def test_grade_accepts_negated_group_language_for_single_skill(tmp_path: Path) -> None:
+    skill, meta = make_skill_fixture(tmp_path)
+    workspace = tmp_path / "workspace"
+    assert run_cmd(
+        "scripts/prepare_behavioral_evals.py",
+        "--skill-path",
+        str(skill),
+        "--meta-evals",
+        str(meta),
+        "--workspace",
+        str(workspace),
+        "--eval-id",
+        "ME-001",
+        "--config",
+        "with_skill",
+    ).returncode == 0
+    run_dir = workspace / "eval-001-single-skill-workflow" / "with_skill" / "run-1"
+    result = """# Proposed Single Skill
+
+This is a single Codex skill. It does not define a skill group, subagents, or an orchestrator-worker workflow.
+
+Inputs: Markdown meeting notes.
+Outputs: decisions, action items, owners, due dates, and open questions.
+
+Eval prompts:
+- Summarize a planning note and assert that owners and due dates are preserved.
+"""
+    assert run_cmd(
+        "scripts/record_behavioral_result.py",
+        "--run-dir",
+        str(run_dir),
+        "--runtime-mode",
+        "multi_agent_v1",
+        input_text=result,
+    ).returncode == 0
+
+    proc = run_cmd("scripts/grade_behavioral_evals.py", "--workspace", str(workspace))
+    assert proc.returncode == 0, proc.stderr
+    grading = json.loads((run_dir / "grading.json").read_text())
+    assert grading["summary"]["passed"] == 3
+
+
+def test_grade_accepts_should_trigger_and_should_not_trigger_pairs(tmp_path: Path) -> None:
+    skill = tmp_path / "skill"
+    fixture = skill / "evals" / "fixtures" / "description_optimization"
+    write(skill / "SKILL.md", "---\nname: skill-creator-v2\n---\n# Skill\n")
+    write(
+        skill / "evals" / "meta-evals.json",
+        json.dumps(
+            {
+                "skill_name": "skill-creator-v2",
+                "evals": [
+                    {
+                        "id": "ME-007",
+                        "name": "description-optimization",
+                        "fixture_dir": "evals/fixtures/description_optimization",
+                        "prompt_file": "evals/fixtures/description_optimization/prompt.md",
+                        "assertions_file": "evals/fixtures/description_optimization/assertions.json",
+                    }
+                ],
+            }
+        ),
+    )
+    write(fixture / "prompt.md", "Optimize a release-notes skill description.")
+    write(
+        fixture / "assertions.json",
+        json.dumps(
+            [
+                {"id": "ME-007-A1", "text": "Positive and negative trigger evals exist.", "failure_mode": "validation_failed"},
+                {"id": "ME-007-A2", "text": "Precision and recall are reported.", "failure_mode": "validation_failed"},
+                {"id": "ME-007-A3", "text": "Held-out evals are separate.", "failure_mode": "validation_failed"},
+            ]
+        ),
+    )
+    workspace = tmp_path / "workspace"
+    assert run_cmd(
+        "scripts/prepare_behavioral_evals.py",
+        "--skill-path",
+        str(skill),
+        "--meta-evals",
+        str(skill / "evals" / "meta-evals.json"),
+        "--workspace",
+        str(workspace),
+        "--eval-id",
+        "ME-007",
+        "--config",
+        "with_skill",
+    ).returncode == 0
+    run_dir = workspace / "eval-001-description-optimization" / "with_skill" / "run-1"
+    result = """# Trigger Eval Set
+
+Training examples:
+- should-trigger: create release notes from commit history.
+- should-not-trigger: write a commit message from a diff.
+
+Held-out examples:
+- should-trigger: turn merged PRs into a changelog.
+- should-not-trigger: triage these issues.
+
+Precision and recall should be reported for training and held-out splits separately.
+"""
+    assert run_cmd(
+        "scripts/record_behavioral_result.py",
+        "--run-dir",
+        str(run_dir),
+        "--runtime-mode",
+        "multi_agent_v1",
+        input_text=result,
+    ).returncode == 0
+
+    proc = run_cmd("scripts/grade_behavioral_evals.py", "--workspace", str(workspace))
+    assert proc.returncode == 0, proc.stderr
+    grading = json.loads((run_dir / "grading.json").read_text())
+    assert grading["summary"]["passed"] == 3
+
+
 def test_grade_attributes_skill_failure(tmp_path: Path) -> None:
     skill, meta = make_skill_fixture(tmp_path)
     workspace = tmp_path / "workspace"

@@ -39,9 +39,38 @@ def check_assertion(eval_key: str, assertion: dict[str, Any], output: str, files
 
     if eval_key == "ME-001":
         if aid.endswith("A1"):
-            passed = has_any(lower, ["single-skill", "single skill", "one self-contained skill"]) and not has_any(
-                lower, ["skill group", "orchestrator-worker", "orchestrator worker"]
+            single_scope = has_any(
+                lower,
+                [
+                    "single-skill",
+                    "single skill",
+                    "single codex skill",
+                    "single lightweight codex skill",
+                    "one self-contained skill",
+                    "this is a single",
+                ],
             )
+            group_positive = has_any(lower, ["skill group"]) and not has_any(
+                lower,
+                [
+                    "not a skill group",
+                    "does not define a skill group",
+                    "do not create a skill group",
+                    "do not include skill-group",
+                    "no skill group",
+                ],
+            )
+            orchestrator_positive = has_any(lower, ["orchestrator-worker", "orchestrator worker"]) and not has_any(
+                lower,
+                [
+                    "not an orchestrator-worker",
+                    "does not define a skill group, subagents, or an orchestrator-worker",
+                    "does not require an orchestrator-worker",
+                    "do not create an orchestrator-worker",
+                    "no orchestrator-worker",
+                ],
+            )
+            passed = single_scope and not group_positive and not orchestrator_positive
             return passed, "actual output uses single-skill scope and avoids group/orchestrator complexity"
         if aid.endswith("A2"):
             passed = has_any(lower, ["inputs", "input"]) and has_any(lower, ["outputs", "output"])
@@ -94,7 +123,9 @@ def check_assertion(eval_key: str, assertion: dict[str, Any], output: str, files
 
     if eval_key == "ME-007":
         if aid.endswith("A1"):
-            return has_any(lower, ["should_trigger", "near-miss", "negative prompt"]), "actual output includes positive and negative trigger evals"
+            has_positive = has_any(lower, ["should_trigger", "should-trigger", "positive trigger"])
+            has_negative = has_any(lower, ["should_not_trigger", "should-not-trigger", "should not trigger", "negative prompt", "near-miss"])
+            return has_positive and has_negative, "actual output includes positive and negative trigger evals"
         if aid.endswith("A2"):
             return has_all(lower, ["precision", "recall"]), "actual output reports trigger precision and recall"
         if aid.endswith("A3"):
