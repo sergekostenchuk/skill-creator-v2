@@ -111,6 +111,8 @@ def test_grade_fails_closed_when_result_is_missing(tmp_path: Path) -> None:
     )
     assert grading["summary"]["pass_rate"] == 0.0
     assert grading["expectations"][0]["failure_mode"] == "missing_actual_output"
+    assert grading["expectations"][0]["failure_attribution"] == "environment"
+    assert grading["failure_attribution_summary"]["environment"] == 1
 
 
 def test_record_and_grade_actual_output(tmp_path: Path) -> None:
@@ -158,6 +160,110 @@ Evals:
     assert proc.returncode == 0, proc.stderr
     grading = json.loads((run_dir / "grading.json").read_text())
     assert grading["summary"]["passed"] == 3
+    assert {item["failure_attribution"] for item in grading["expectations"]} == {"not_applicable"}
     report = json.loads((workspace / "behavioral-eval-report.json").read_text())
     assert report["runtime_mode"] == "behavioral_recorded_outputs"
     assert report["inline_fallback_counts_as_behavioral"] is False
+
+
+def test_grade_attributes_skill_failure(tmp_path: Path) -> None:
+    skill, meta = make_skill_fixture(tmp_path)
+    workspace = tmp_path / "workspace"
+    assert run_cmd(
+        "scripts/prepare_behavioral_evals.py",
+        "--skill-path",
+        str(skill),
+        "--meta-evals",
+        str(meta),
+        "--workspace",
+        str(workspace),
+        "--eval-id",
+        "ME-001",
+        "--config",
+        "with_skill",
+    ).returncode == 0
+    run_dir = workspace / "eval-001-single-skill-workflow" / "with_skill" / "run-1"
+    result = """# meeting-notes-summarizer
+
+Type: single-skill
+
+Inputs: messy notes.
+Outputs: summary.
+"""
+    assert run_cmd(
+        "scripts/record_behavioral_result.py",
+        "--run-dir",
+        str(run_dir),
+        "--runtime-mode",
+        "multi_agent_v1",
+        input_text=result,
+    ).returncode == 0
+
+    assert run_cmd("scripts/grade_behavioral_evals.py", "--workspace", str(workspace)).returncode == 2
+    grading = json.loads((run_dir / "grading.json").read_text())
+    failed = [item for item in grading["expectations"] if not item["passed"]]
+    assert failed
+    assert failed[0]["failure_attribution"] == "skill"
+    assert grading["failure_attribution_summary"]["skill"] >= 1
+
+
+def test_grade_attributes_agent_failure(tmp_path: Path) -> None:
+    skill, meta = make_skill_fixture(tmp_path)
+    workspace = tmp_path / "workspace"
+    assert run_cmd(
+        "scripts/prepare_behavioral_evals.py",
+        "--skill-path",
+        str(skill),
+        "--meta-evals",
+        str(meta),
+        "--workspace",
+        str(workspace),
+        "--eval-id",
+        "ME-001",
+        "--config",
+        "with_skill",
+    ).returncode == 0
+    run_dir = workspace / "eval-001-single-skill-workflow" / "with_skill" / "run-1"
+    assert run_cmd(
+        "scripts/record_behavioral_result.py",
+        "--run-dir",
+        str(run_dir),
+        "--runtime-mode",
+        "multi_agent_v1",
+        input_text="I ignored the provided skill and answered from generic memory.",
+    ).returncode == 0
+
+    assert run_cmd("scripts/grade_behavioral_evals.py", "--workspace", str(workspace)).returncode == 2
+    grading = json.loads((run_dir / "grading.json").read_text())
+    assert grading["failure_attribution_summary"]["agent"] >= 1
+
+
+def test_grade_attributes_ambiguous_failure(tmp_path: Path) -> None:
+    skill, meta = make_skill_fixture(tmp_path)
+    workspace = tmp_path / "workspace"
+    assert run_cmd(
+        "scripts/prepare_behavioral_evals.py",
+        "--skill-path",
+        str(skill),
+        "--meta-evals",
+        str(meta),
+        "--workspace",
+        str(workspace),
+        "--eval-id",
+        "ME-001",
+        "--config",
+        "with_skill",
+    ).returncode == 0
+    run_dir = workspace / "eval-001-single-skill-workflow" / "with_skill" / "run-1"
+    assert run_cmd(
+        "scripts/record_behavioral_result.py",
+        "--run-dir",
+        str(run_dir),
+        "--runtime-mode",
+        "multi_agent_v1",
+        input_text="Not enough context to determine the correct skill output.",
+    ).returncode == 0
+
+    assert run_cmd("scripts/grade_behavioral_evals.py", "--workspace", str(workspace)).returncode == 2
+    grading = json.loads((run_dir / "grading.json").read_text())
+    assert grading["failure_attribution_summary"]["ambiguous"] >= 1

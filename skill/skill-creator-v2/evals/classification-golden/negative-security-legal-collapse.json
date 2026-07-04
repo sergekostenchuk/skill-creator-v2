@@ -1,0 +1,25 @@
+{
+  "case_id": "CN-003",
+  "case_type": "negative",
+  "prompt": "Create a skill for traffic administrative defense. It must cite procedure, separate facts from assumptions, and stop before sending an appeal.",
+  "expected": {
+    "activity_type": ["research", "analyze", "defend", "communicate"],
+    "domain": ["legal"],
+    "tool_surface": ["legal_sources", "browser", "filesystem"],
+    "risk_profile": {
+      "primary": "legal_high_stakes",
+      "secondary": []
+    },
+    "evidence_profile": ["legal_citation", "source_citation", "decision_packet", "human_approval"],
+    "workflow_shape": ["sequential_pipeline", "human_decision_gate"],
+    "derived_archetype": "legal_reasoning_and_defense",
+    "group_requirement": "single_skill",
+    "routing_path": "deep"
+  },
+  "must_not": {
+    "domain": ["security"],
+    "risk_profile": ["security_privacy"],
+    "derived_archetype": ["custom_tuple"]
+  },
+  "notes": "Legal defense must not collapse into security/legal/compliance as one bucket."
+}

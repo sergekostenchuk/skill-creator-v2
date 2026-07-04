@@ -1,0 +1,24 @@
+{
+  "case_id": "CG-004",
+  "case_type": "golden",
+  "prompt": "Create a Russian tax administrative defense skill that reviews facts, separates assumptions, cites current law, drafts position options, and stops before final legal filing.",
+  "expected": {
+    "activity_type": ["research", "analyze", "defend", "communicate"],
+    "domain": ["legal"],
+    "tool_surface": ["legal_sources", "browser", "filesystem"],
+    "risk_profile": {
+      "primary": "legal_high_stakes",
+      "secondary": []
+    },
+    "evidence_profile": ["legal_citation", "source_citation", "decision_packet", "human_approval"],
+    "workflow_shape": ["sequential_pipeline", "independent_reviewer", "human_decision_gate"],
+    "derived_archetype": "legal_reasoning_and_defense",
+    "group_requirement": "single_skill",
+    "routing_path": "deep"
+  },
+  "must_not": {
+    "domain": ["security"],
+    "risk_profile": ["low_advisory"]
+  },
+  "notes": "Legal defense requires jurisdiction/citation/human approval gates, not a generic research helper."
+}

@@ -1,0 +1,24 @@
+{
+  "case_id": "CN-004",
+  "case_type": "negative",
+  "prompt": "Create a skill for DNS and SSL changes: compare registrar records, update DNS, validate propagation and certificate state, and document rollback.",
+  "expected": {
+    "activity_type": ["configure", "validate"],
+    "domain": ["dns_ssl_domain"],
+    "tool_surface": ["browser", "api_mcp", "terminal"],
+    "risk_profile": {
+      "primary": "production_infrastructure",
+      "secondary": ["external_source_freshness"]
+    },
+    "evidence_profile": ["command_output", "source_citation", "before_after_comparison", "rollback_proof"],
+    "workflow_shape": ["sequential_pipeline", "human_decision_gate"],
+    "derived_archetype": "domain_dns_ssl_operation",
+    "group_requirement": "single_skill",
+    "routing_path": "deep"
+  },
+  "must_not": {
+    "domain": ["infrastructure", "network_vpn"],
+    "derived_archetype": ["server_provisioning", "private_network_operation"]
+  },
+  "notes": "DNS/SSL has propagation and registrar evidence, not generic server or VPN evidence."
+}

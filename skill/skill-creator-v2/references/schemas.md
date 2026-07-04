@@ -4,6 +4,69 @@ This document defines the JSON schemas used by skill-creator.
 
 ---
 
+## classifier-output-schema.json
+
+Defines the classification packet for serious skill creation or improvement. Located at `references/classifier-output-schema.json`.
+
+Use this schema after the request is mapped with `references/activity-taxonomy.md` and before generating gates, evidence contracts, or skill-group boundaries.
+
+Required top-level fields:
+
+- `packet_version`
+- `request_summary`
+- `classification`
+- `classification_confidence`
+- `required_evidence`
+- `readiness_gates`
+- `failure_modes`
+- `eval_strategy`
+- `group_requirement`
+- `human_review_required`
+- `routing_decision`
+- `open_questions`
+- `blocked_reason`
+
+Important behavior:
+
+- `classification` uses the multi-axis taxonomy values from `activity-taxonomy.md`.
+- `classification_confidence` must include confidence for every core axis.
+- `routing_decision.path` is `fast`, `deep`, or `blocked`.
+- `blocked_reason` must be non-null when the next step requires human decision before implementation.
+- `group_requirement` is `single_skill`, `skill_group`, `orchestrator_worker`, or `blocked_for_human_decision`.
+
+The human-readable contract is in `references/classifier-output-contract.md`.
+
+---
+
+## evidence-contract-schema.json
+
+Defines the structured evidence contract for skill outputs, worker outputs, and release claims. Located at `references/evidence-contract-schema.json`.
+
+Required fields per evidence item:
+
+- `evidence_id`
+- `type`
+- `claim_supported`
+- `why_needed`
+- `collection_method`
+- `artifact_path`
+- `validator`
+- `required_for_done`
+- `sanitation_rule`
+- `status`
+
+Valid statuses:
+
+- `planned`
+- `collected`
+- `validated`
+- `blocked`
+- `waived_with_risk`
+
+The human-readable templates are in `references/evidence-contract-templates.md`.
+
+---
+
 ## evals.json
 
 Defines the evals for a skill. Located at `evals/evals.json` within the skill directory.
@@ -93,12 +156,16 @@ Output from the grader agent. Located at `<run-dir>/grading.json`.
     {
       "text": "The output includes the name 'John Smith'",
       "passed": true,
-      "evidence": "Found in transcript Step 3: 'Extracted names: John Smith, Sarah Johnson'"
+      "evidence": "Found in transcript Step 3: 'Extracted names: John Smith, Sarah Johnson'",
+      "failure_attribution": "not_applicable",
+      "failure_attribution_rationale": "assertion passed"
     },
     {
       "text": "The spreadsheet has a SUM formula in cell B10",
       "passed": false,
-      "evidence": "No spreadsheet was created. The output was a text file."
+      "evidence": "No spreadsheet was created. The output was a text file.",
+      "failure_attribution": "skill",
+      "failure_attribution_rationale": "failed expected skill behavior: missing_artifact"
     }
   ],
   "summary": {
@@ -106,6 +173,14 @@ Output from the grader agent. Located at `<run-dir>/grading.json`.
     "failed": 1,
     "total": 3,
     "pass_rate": 0.67
+  },
+  "failure_attribution_summary": {
+    "skill": 1,
+    "agent": 0,
+    "environment": 0,
+    "fixture": 0,
+    "ambiguous": 0,
+    "not_applicable": 2
   },
   "execution_metrics": {
     "tool_calls": {
@@ -151,7 +226,10 @@ Output from the grader agent. Located at `<run-dir>/grading.json`.
 
 **Fields:**
 - `expectations[]`: Graded expectations with evidence
+- `expectations[].failure_attribution`: Repair layer for failed behavioral checks: `skill`, `agent`, `environment`, `fixture`, `ambiguous`, or `not_applicable`
+- `expectations[].failure_attribution_rationale`: Evidence-backed reason for the attribution; use `ambiguous` when the grader cannot know
 - `summary`: Aggregate pass/fail counts
+- `failure_attribution_summary`: Counts by attribution category
 - `execution_metrics`: Tool usage and output size (from executor's metrics.json)
 - `timing`: Wall clock timing (from timing.json)
 - `claims`: Extracted and verified claims from the output

@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/skill-creator-v2/classifier-output-schema.json",
+  "title": "Skill Creator V2 Classifier Output Packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "packet_version",
+    "request_summary",
+    "classification",
+    "classification_confidence",
+    "required_evidence",
+    "readiness_gates",
+    "failure_modes",
+    "eval_strategy",
+    "group_requirement",
+    "human_review_required",
+    "routing_decision",
+    "open_questions",
+    "blocked_reason"
+  ],
+  "properties": {
+    "packet_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request_summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog_family",
+        "specialist_role",
+        "activity_type",
+        "domain",
+        "tool_surface",
+        "risk_profile",
+        "evidence_profile",
+        "workflow_shape",
+        "derived_archetype"
+      ],
+      "properties": {
+        "catalog_family": {
+          "type": "string",
+          "enum": ["engineering", "networking", "legal", "design", "growth", "knowledge", "media", "meta", "operations", "custom"]
+        },
+        "specialist_role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "activity_type": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["research", "analyze", "design", "build", "transform", "configure", "operate", "troubleshoot", "validate", "defend", "orchestrate", "publish_release", "monitor", "communicate"]
+          }
+        },
+        "domain": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["infrastructure", "network_vpn", "dns_ssl_domain", "deployment_devops", "security", "legal", "design_ux", "design_system", "seo_discoverability", "wiki_knowledge", "browser_web", "media_creative", "skill_meta", "data_document", "desktop_app"]
+          }
+        },
+        "tool_surface": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["filesystem", "terminal", "server_ssh", "network_device_cli", "browser", "external_website", "figma", "api_mcp", "package_manager", "git_github", "legal_sources", "design_tools", "database_query", "cloud_provider", "desktop_gui", "image_video_tooling"]
+          }
+        },
+        "risk_profile": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["primary", "secondary"],
+          "properties": {
+            "primary": {
+              "type": "string",
+              "enum": ["low_advisory", "internal_reversible", "external_source_freshness", "visual_client_facing", "production_infrastructure", "security_privacy", "legal_high_stakes", "financial_business", "irreversible_destructive"]
+            },
+            "secondary": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": ["low_advisory", "internal_reversible", "external_source_freshness", "visual_client_facing", "production_infrastructure", "security_privacy", "legal_high_stakes", "financial_business", "irreversible_destructive"]
+              }
+            }
+          }
+        },
+        "evidence_profile": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["command_output", "config_diff", "test_result", "screenshot", "dom_metadata", "network_log", "source_citation", "legal_citation", "source_hash", "package_hash", "benchmark_metric", "human_approval", "before_after_comparison", "rollback_proof", "generated_artifact", "visual_review", "trace_log", "decision_packet"]
+          }
+        },
+        "workflow_shape": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["single_pass", "iterative", "sequential_pipeline", "branching_pipeline", "orchestrator_worker", "independent_reviewer", "evaluator_optimizer", "monitoring_loop", "parallel_research", "human_decision_gate"]
+          }
+        },
+        "derived_archetype": {
+          "type": "string",
+          "enum": ["server_provisioning", "private_network_operation", "network_device_operation", "domain_dns_ssl_operation", "deployment_release_operation", "legal_reasoning_and_defense", "ui_reference_research", "ui_build", "figma_canvas_operation", "seo_semantic_core", "browser_live_inspection", "wiki_knowledge_ingest", "media_motion_generation", "skill_meta_creation", "custom_tuple"]
+        }
+      }
+    },
+    "classification_confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["activity_type", "domain", "tool_surface", "risk_profile", "evidence_profile", "workflow_shape"],
+      "properties": {
+        "activity_type": { "$ref": "#/$defs/confidence_score" },
+        "domain": { "$ref": "#/$defs/confidence_score" },
+        "tool_surface": { "$ref": "#/$defs/confidence_score" },
+        "risk_profile": { "$ref": "#/$defs/confidence_score" },
+        "evidence_profile": { "$ref": "#/$defs/confidence_score" },
+        "workflow_shape": { "$ref": "#/$defs/confidence_score" }
+      }
+    },
+    "required_evidence": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/evidence_requirement" }
+    },
+    "readiness_gates": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/readiness_gate" }
+    },
+    "failure_modes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "eval_strategy": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "group_requirement": {
+      "type": "string",
+      "enum": ["single_skill", "skill_group", "orchestrator_worker", "blocked_for_human_decision"]
+    },
+    "human_review_required": {
+      "type": "boolean"
+    },
+    "routing_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "reason"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "enum": ["fast", "deep", "blocked"]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "blocked_reason": {
+      "type": ["string", "null"]
+    }
+  },
+  "$defs": {
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "evidence_requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "why_needed", "minimum_artifact"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "why_needed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "minimum_artifact": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "readiness_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gate_id", "required", "reason"],
+      "properties": {
+        "gate_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

@@ -29,12 +29,19 @@ Read only the references needed for the selected mode:
 | Mode | Read |
 | --- | --- |
 | all production work | `references/production-skill-architecture.md`, `references/failure-modes.md` |
+| activity classification, domain/risk/evidence routing, or local archetype selection | `references/activity-taxonomy.md`, `references/classifier-output-contract.md` |
+| production, legal, security, financial, destructive, visual, or external-source risk gates | `references/risk-to-gate-matrix.md` |
+| evidence contracts, proof paths, validation, and sanitation rules | `references/evidence-contract-templates.md` |
+| fast path vs deep path, anti-overprocessing, or blocked route decisions | `references/fast-path-deep-path-routing.md` |
+| deep-path skill work, public release candidates, or source/runtime separation | `references/workbench-source-runtime-model.md`, `references/workbench-lifecycle.md` |
+| context continuity, handoff review, approved context packets, or human-owned decisions | `references/context-reviewer-gate.md` |
+| browser live inspection, runtime website evidence, Figma canvas, or design-system operations | `references/browser-live-inspection.md`, `references/figma-operation-archetype.md` |
 | external tools, MCPs, APIs, packages | `references/tool-verification.md` |
 | external-source research, live sites, current facts, screenshots, citations, or recommendations | `references/external-source-evidence.md` |
-| skill groups or delegated workers | `references/orchestrator-worker-contract.md` |
+| skill groups or delegated workers | `references/orchestrator-worker-contract.md`, `references/group-decomposition-taxonomy.md` |
 | evals, benchmark, feedback loop | `references/eval-and-iteration.md`, `references/schemas.md` |
 | trigger description optimization | `references/description-optimization.md` |
-| final packaging/release | `references/final-review-gate.md` |
+| final packaging/release, maintenance metadata, cross-platform smoke, or publication sanitation | `references/final-review-gate.md`, `references/maintenance-policy.md`, `references/platform-install-smoke-matrix.md` |
 
 Use bundled scripts for deterministic checks before relying on judgment:
 
@@ -44,6 +51,10 @@ Use bundled scripts for deterministic checks before relying on judgment:
 - `scripts/aggregate_benchmark.py <workspace>/iteration-N --skill-name <name>`
 - `eval-viewer/generate_review.py <workspace>/iteration-N --skill-name <name> --static <review.html>`
 - `scripts/package_skill.py <skill-path> <dist-dir>`
+- `scripts/run_all_checks.py --skill-path <skill-path> --workspace <workspace>`
+- `scripts/self_diagnose.py --skill-path <skill-path> --output <workspace>/self-diagnose.json`
+- `scripts/install_skill.py --skill-path <skill-path> --target <runtime> --output <workspace>/install-plan.json` (dry-run by default; writes require `--apply`)
+- `scripts/sanitize_package.py --path <package-or-folder> --output <workspace>/sanitation-report.json`
 - `scripts/prepare_behavioral_evals.py --skill-path <skill-path> --meta-evals <meta-evals.json> --workspace <workspace>`
 - `scripts/record_behavioral_result.py --run-dir <run-dir> < result.md`
 - `scripts/grade_behavioral_evals.py --workspace <workspace>`
@@ -55,9 +66,13 @@ Do not call a generated skill production-ready unless all applicable facts are b
 - Inputs, outputs, trigger conditions, and non-goals are explicit.
 - Tool/MCP/API/package dependencies are declared and verified, or missing/fallback/manual-approval states are reported.
 - Failure modes use a closed taxonomy from `references/failure-modes.md`.
+- Risk-derived gates from `references/risk-to-gate-matrix.md` are applied when classification includes production, legal, security, financial, destructive, visual, or external-source risk.
 - Retry limits and escalation paths are stated.
 - Success claims cite artifacts, command output, generated files, fetched content, or review evidence.
+- Required evidence is represented as a contract with collection method, artifact path, validator, required-for-done flag, and sanitation rule.
 - Evals include realistic prompts and evidence-backed grading where useful.
+- Deep-path work separates private workbench evidence from clean source and runtime artifacts.
+- Required context-review checkpoints pass before downstream workers or final acceptance when risk/complexity requires them.
 - Final review score is at least 9/10 or release is blocked with revision instructions.
 
 Unknown dependency safety means `manual_approval_required` or `hard_blocked`, not auto-install. Never auto-approve `latest`, `latest-stable`, unpinned versions, version drift, blocklisted packages, or packages without integrity evidence.
@@ -65,13 +80,19 @@ Unknown dependency safety means `manual_approval_required` or `hard_blocked`, no
 ## Workflow
 
 1. Capture intent from the conversation before asking questions. Confirm only gaps that affect scope, dependencies, or success criteria.
-2. Choose the request mode and route to the relevant references.
-3. Verify tool reality before writing instructions that depend on external tools.
-4. Draft or improve the skill using progressive disclosure: concise `SKILL.md`, details in `references/`, deterministic helpers in `scripts/`, templates in `assets/`.
-5. Add evals when the output is verifiable or the user wants confidence. Keep vibe mode light when explicitly requested, but disclose skipped checks.
-6. Run lint, tool verification, install gate checks, eval aggregation, and viewer generation as applicable.
-7. Iterate from evidence: user feedback, grading output, failed assertions, review findings, and benchmark deltas.
-8. Before packaging, run the final review gate and produce a delivery report.
+2. Choose the request mode and, for non-trivial work, classify the human activity with `references/activity-taxonomy.md` and record a classification packet using `references/classifier-output-contract.md` before choosing gates or group boundaries.
+3. Choose the smallest truthful route with `references/fast-path-deep-path-routing.md`: `fast`, `deep`, or `blocked`.
+4. For deep-path work, create or identify a workbench and keep private traces separate from the clean source package.
+5. Verify tool reality before writing instructions that depend on external tools.
+6. Draft or improve the skill using progressive disclosure: concise `SKILL.md`, details in `references/`, deterministic helpers in `scripts/`, templates in `assets/`.
+7. Add evals when the output is verifiable or the user wants confidence. Keep vibe mode light when explicitly requested, but disclose skipped checks.
+8. Run lint, tool verification, install gate checks, eval aggregation, and viewer generation as applicable.
+9. Iterate from evidence: user feedback, grading output, failed assertions, review findings, and benchmark deltas.
+10. For deep-path or grouped work, run context-review checkpoints before handoff or acceptance.
+11. Before publication or public packaging, run `scripts/run_all_checks.py` and preserve its JSON output as release evidence.
+12. For installation, generate a dry-run install plan first; never mutate runtime roots unless the user explicitly approves apply mode.
+13. For cross-platform support claims, include `evals/fixtures/platform-smoke-*` coverage plus per-target install/smoke evidence.
+14. Before packaging, run the final review gate and produce a delivery report.
 
 ## Vibe Mode
 
@@ -92,6 +113,7 @@ For serious skill creation or improvement, use the eval loop in `references/eval
 - Aggregate results into `benchmark.json`.
 - Generate the review UI so a human can inspect outputs.
 - Improve the skill from feedback and evidence, not from abstract polishing.
+- For platform support, keep `platform-smoke-*` fixtures and runtime smoke evidence in the release workspace before claiming support.
 
 When subagent execution is unavailable or not explicitly authorized, use the documented inline fallback and label results as lower-isolation evidence.
 
@@ -104,10 +126,12 @@ For external-source skills, do not accept catalog cards, source names, hero-only
 For groups and worker systems, read `references/orchestrator-worker-contract.md` before drafting. The output must include:
 
 - Skill or worker boundaries.
+- Worker-specific classification packets.
 - Write zones.
 - Dependency/parallelism table.
 - Stop rules.
 - Completion versus acceptance distinction.
+- Context-review checkpoints and approved context packets.
 - Independent verification before accepting worker output.
 
 ## Final Response Format

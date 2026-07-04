@@ -1,0 +1,24 @@
+{
+  "case_id": "CG-002",
+  "case_type": "golden",
+  "prompt": "Create a senior Xray VPN skill that designs config, validates routes, checks leak risk, and preserves rollback before touching server files.",
+  "expected": {
+    "activity_type": ["design", "configure", "validate"],
+    "domain": ["network_vpn"],
+    "tool_surface": ["terminal", "server_ssh", "filesystem"],
+    "risk_profile": {
+      "primary": "security_privacy",
+      "secondary": ["production_infrastructure"]
+    },
+    "evidence_profile": ["command_output", "config_diff", "test_result", "rollback_proof"],
+    "workflow_shape": ["sequential_pipeline", "human_decision_gate"],
+    "derived_archetype": "private_network_operation",
+    "group_requirement": "single_skill",
+    "routing_path": "deep"
+  },
+  "must_not": {
+    "domain": ["infrastructure"],
+    "derived_archetype": ["server_provisioning"]
+  },
+  "notes": "Xray/VPN must not collapse into generic VPS provisioning because privacy/routing evidence differs."
+}

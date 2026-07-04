@@ -1,0 +1,34 @@
+[
+  {
+    "id": "PS-PORTABLE-A1",
+    "text": "Every target has an explicit support tier.",
+    "evidence_required": "support matrix with native_skill_root, portable_root_installed, adapter_needed, skipped, or blocked",
+    "failure_mode": "overclaimed_platform_support",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "PS-PORTABLE-A2",
+    "text": "Known targets use installer target names and custom roots use target-path.",
+    "evidence_required": "install command trace for --target and --target-path use",
+    "failure_mode": "guessed_runtime_path",
+    "evaluation_method": "command_trace",
+    "required": true
+  },
+  {
+    "id": "PS-PORTABLE-A3",
+    "text": "Applied roots have validation, hash, and rollback evidence.",
+    "evidence_required": "per-target plan JSON, validation log, sha256 comparison, and backup path",
+    "failure_mode": "missing_runtime_smoke_evidence",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "PS-PORTABLE-A4",
+    "text": "Portable support is not described as native runtime discovery.",
+    "evidence_required": "support matrix caveat for portable/projection targets",
+    "failure_mode": "native_support_overclaim",
+    "evaluation_method": "review_judge",
+    "required": true
+  }
+]

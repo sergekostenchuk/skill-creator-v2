@@ -1,0 +1,24 @@
+{
+  "case_id": "CG-003",
+  "case_type": "golden",
+  "prompt": "Create a skill for GL-MT6000 router operations: inspect current config, change routes safely, avoid lockout, verify connectivity, and preserve rollback.",
+  "expected": {
+    "activity_type": ["configure", "operate", "troubleshoot", "validate"],
+    "domain": ["network_vpn"],
+    "tool_surface": ["network_device_cli"],
+    "risk_profile": {
+      "primary": "production_infrastructure",
+      "secondary": ["security_privacy"]
+    },
+    "evidence_profile": ["config_diff", "command_output", "test_result", "rollback_proof"],
+    "workflow_shape": ["sequential_pipeline", "human_decision_gate"],
+    "derived_archetype": "network_device_operation",
+    "group_requirement": "single_skill",
+    "routing_path": "deep"
+  },
+  "must_not": {
+    "tool_surface": ["server_ssh"],
+    "derived_archetype": ["server_provisioning", "private_network_operation"]
+  },
+  "notes": "Router operations require lockout-aware network-device evidence, not generic server SSH evidence."
+}

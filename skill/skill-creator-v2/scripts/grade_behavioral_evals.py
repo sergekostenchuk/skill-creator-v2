@@ -135,6 +135,73 @@ def check_assertion(eval_key: str, assertion: dict[str, Any], output: str, files
     return False, f"No behavioral assertion grader implemented for {eval_key}/{aid}; files_created={len(files_created)}"
 
 
+def failure_attribution(
+    *,
+    passed: bool,
+    assertion: dict[str, Any],
+    evidence: str,
+    output: str,
+    result_exists: bool,
+    metrics: dict[str, Any],
+    runtime_mode: str,
+) -> tuple[str, str]:
+    """Attribute a behavioral failure to the most likely repair layer.
+
+    This is intentionally conservative. When the signal is weak, the grader
+    returns `ambiguous` instead of pretending it can know whether the skill or
+    executor was at fault.
+    """
+    if passed:
+        return "not_applicable", "assertion passed"
+    if not result_exists:
+        return "environment", "actual executor output is missing"
+
+    lower = output.lower()
+    if any(term in lower for term in ["ignored the provided skill", "did not use the skill", "without reading the skill"]):
+        return "agent", "output indicates the executor ignored the provided skill context"
+    if any(term in lower for term in ["tool unavailable", "permission denied", "timeout", "could not run", "module not found"]):
+        return "environment", "output indicates tool/runtime/environment failure"
+    if any(term in lower for term in ["not enough context", "unclear", "ambiguous", "cannot determine"]):
+        return "ambiguous", "output indicates ambiguous scope or insufficient context"
+    if "No behavioral assertion grader implemented" in evidence:
+        return "fixture", "grader does not implement this fixture assertion"
+    if metrics.get("errors_encountered", 0) and runtime_mode == "unknown":
+        return "environment", "runtime mode is unknown and metrics record errors"
+
+    skill_failure_modes = {
+        "over_scoped",
+        "missing_contract",
+        "missing_evals",
+        "missing_baseline",
+        "missing_dependency_verification",
+        "unsafe_dependency",
+        "missing_trigger_eval",
+        "missing_observability",
+        "missing_eval_coverage",
+        "overprocessed_simple_request",
+        "partial_output",
+        "validation_failed",
+    }
+    if assertion.get("failure_mode") in skill_failure_modes:
+        return "skill", f"failed expected skill behavior: {assertion.get('failure_mode')}"
+    return "ambiguous", "failure lacks enough signal for reliable attribution"
+
+
+def attribution_summary(expectations: list[dict[str, Any]]) -> dict[str, int]:
+    summary = {
+        "skill": 0,
+        "agent": 0,
+        "environment": 0,
+        "fixture": 0,
+        "ambiguous": 0,
+        "not_applicable": 0,
+    }
+    for item in expectations:
+        key = item.get("failure_attribution", "ambiguous")
+        summary[key] = summary.get(key, 0) + 1
+    return summary
+
+
 def load_metrics(run_dir: Path) -> dict[str, Any]:
     metrics_path = run_dir / "outputs" / "metrics.json"
     if metrics_path.exists():
@@ -175,9 +242,19 @@ def grade_run(eval_dir: Path, config: str, run_dir: Path, allow_partial: bool) -
                     "evidence": f"Missing {result_path}",
                     "assertion_id": "BEHAVIORAL-OUTPUT",
                     "failure_mode": "missing_actual_output",
+                    "failure_attribution": "environment",
+                    "failure_attribution_rationale": "actual executor output is missing",
                 }
             ],
             "summary": {"passed": 0, "failed": 1, "total": 1, "pass_rate": 0.0},
+            "failure_attribution_summary": {
+                "skill": 0,
+                "agent": 0,
+                "environment": 1,
+                "fixture": 0,
+                "ambiguous": 0,
+                "not_applicable": 0,
+            },
             "execution_metrics": metrics,
             "timing": timing,
             "claims": [
@@ -201,9 +278,19 @@ def grade_run(eval_dir: Path, config: str, run_dir: Path, allow_partial: bool) -
     files_created = metrics.get("files_created", [])
     expectations = []
     passed_count = 0
+    runtime_mode = run_record.get("runtime_mode") or timing.get("runtime_mode") or "unknown"
     for assertion in assertions:
         passed, evidence = check_assertion(eval_key, assertion, output, files_created)
         passed_count += 1 if passed else 0
+        attribution, attribution_rationale = failure_attribution(
+            passed=passed,
+            assertion=assertion,
+            evidence=evidence,
+            output=output,
+            result_exists=True,
+            metrics=metrics,
+            runtime_mode=runtime_mode,
+        )
         expectations.append(
             {
                 "text": assertion.get("text", ""),
@@ -211,11 +298,12 @@ def grade_run(eval_dir: Path, config: str, run_dir: Path, allow_partial: bool) -
                 "evidence": evidence,
                 "assertion_id": assertion.get("id"),
                 "failure_mode": assertion.get("failure_mode"),
+                "failure_attribution": attribution,
+                "failure_attribution_rationale": attribution_rationale,
             }
         )
 
     total = len(expectations)
-    runtime_mode = run_record.get("runtime_mode") or timing.get("runtime_mode") or "unknown"
     grading = {
         "expectations": expectations,
         "summary": {
@@ -224,6 +312,7 @@ def grade_run(eval_dir: Path, config: str, run_dir: Path, allow_partial: bool) -
             "total": total,
             "pass_rate": round(passed_count / total, 4) if total else 0.0,
         },
+        "failure_attribution_summary": attribution_summary(expectations),
         "execution_metrics": metrics,
         "timing": timing,
         "claims": [
@@ -250,7 +339,7 @@ def grade_run(eval_dir: Path, config: str, run_dir: Path, allow_partial: bool) -
         "result_path": str(result_path),
     }
     write_json(run_dir / "grading.json", grading)
-    return grading, True
+    return grading, allow_partial or grading["summary"]["failed"] == 0
 
 
 def write_diff(eval_dir: Path, gradings: dict[str, dict[str, Any]]) -> None:

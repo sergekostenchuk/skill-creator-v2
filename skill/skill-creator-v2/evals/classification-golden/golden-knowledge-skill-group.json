@@ -1,0 +1,50 @@
+{
+  "case_id": "CG-007",
+  "case_type": "golden",
+  "prompt": "Create a small wiki skill group: one skill ingests local documents into normalized notes, another skill queries those notes with source citations, and a third reviewer skill checks deduplication and provenance.",
+  "expected": {
+    "activity_type": [
+      "transform",
+      "analyze",
+      "validate",
+      "orchestrate"
+    ],
+    "domain": [
+      "wiki_knowledge",
+      "data_document"
+    ],
+    "tool_surface": [
+      "filesystem",
+      "terminal"
+    ],
+    "risk_profile": {
+      "primary": "internal_reversible",
+      "secondary": [
+        "security_privacy"
+      ]
+    },
+    "evidence_profile": [
+      "source_hash",
+      "generated_artifact",
+      "trace_log",
+      "decision_packet"
+    ],
+    "workflow_shape": [
+      "sequential_pipeline",
+      "independent_reviewer"
+    ],
+    "derived_archetype": "custom_tuple",
+    "group_requirement": "skill_group",
+    "routing_path": "deep"
+  },
+  "must_not": {
+    "group_requirement": [
+      "single_skill",
+      "orchestrator_worker"
+    ],
+    "evidence_profile": [
+      "screenshot"
+    ]
+  },
+  "notes": "A skill group is enough because the user asks for related installed skills with separate boundaries; no runtime orchestrator is required."
+}

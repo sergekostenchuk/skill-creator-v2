@@ -1,0 +1,34 @@
+[
+  {
+    "id": "PS-ADAPTER-A1",
+    "text": "OpenCode/opencode and VS Codium are not claimed as native without discovery evidence.",
+    "evidence_required": "adapter decision report with support tier and discovery evidence",
+    "failure_mode": "native_support_overclaim",
+    "evaluation_method": "review_judge",
+    "required": true
+  },
+  {
+    "id": "PS-ADAPTER-A2",
+    "text": "Adapter targets define a concrete adapter artifact before support is claimed.",
+    "evidence_required": "adapter artifact contract such as AGENTS.md projection or manual import path",
+    "failure_mode": "missing_adapter_contract",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  },
+  {
+    "id": "PS-ADAPTER-A3",
+    "text": "A smoke test is required to prove the runtime reads the adapter.",
+    "evidence_required": "planned or executed adapter smoke command with expected observable result",
+    "failure_mode": "missing_runtime_smoke_evidence",
+    "evaluation_method": "command_trace",
+    "required": true
+  },
+  {
+    "id": "PS-ADAPTER-A4",
+    "text": "Unproven targets are excluded from public support claims.",
+    "evidence_required": "release support matrix with unsupported_for_release or adapter_needed status",
+    "failure_mode": "overclaimed_platform_support",
+    "evaluation_method": "artifact_inspection",
+    "required": true
+  }
+]

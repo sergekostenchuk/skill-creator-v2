@@ -1,0 +1,71 @@
+{
+  "benchmark_schema": "skill-creator-v2.benchmark.v1",
+  "generated_at": "2026-07-03T23:42:29Z",
+  "run_id": "RA-021",
+  "release_candidate": {
+    "skill_name": "skill-creator-v2",
+    "package_version": "0.2.0",
+    "purpose": "local gap closure before any new public publication",
+    "version_policy": "publish as v0.2.0 because GitHub v0.1.0 already exists with older public content"
+  },
+  "runtime_modes": {
+    "run_all_checks": "local_release_check_runner",
+    "pytest": "local_pytest_from_pyproject",
+    "taxonomy_classification": "deterministic_fixture_validation",
+    "meta_evals": "inline_fallback",
+    "self_diagnose": "deterministic_self_diagnostic",
+    "platform_smoke_fixtures": "fixture_schema_validation",
+    "behavioral_independent": "not_claimed"
+  },
+  "summary": {
+    "release_ready_checks_passed": true,
+    "run_all_checks": {
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "total": 8
+    },
+    "pytest": {
+      "result": "37 passed",
+      "runner_metadata": "pyproject.toml"
+    },
+    "taxonomy_classification": {
+      "passed": 14,
+      "failed": 0,
+      "total": 14
+    },
+    "meta_evals_inline": {
+      "assertions_passed": 24,
+      "assertions_total": 24,
+      "eval_count": 8,
+      "pass_rate": 1.0
+    },
+    "self_diagnose": {
+      "coverage_score": 0.875,
+      "severity": "pass"
+    },
+    "platform_smoke_fixtures": {
+      "present": 3,
+      "required": 3,
+      "fixture_names": [
+        "platform-smoke-adapter-needed",
+        "platform-smoke-codex",
+        "platform-smoke-portable"
+      ]
+    },
+    "skill_package_sha256": "a37fcda564d88f9ec4ed1b8befed06ab17925bdc2b3c07ccd71d6846282c6fee"
+  },
+  "artifacts": {
+    "run_all_checks": "skill-creator-v2-workspace/ra-021-gap-closure/run-all-final-clean/run-all-checks.json",
+    "taxonomy_report": "skill-creator-v2-workspace/ra-021-gap-closure/run-all-final-clean/taxonomy-classification-report.json",
+    "self_diagnose_report": "skill-creator-v2-workspace/ra-021-gap-closure/run-all-final-clean/self-diagnose.json",
+    "meta_eval_report": "skill-creator-v2-workspace/ra-021-gap-closure/run-all-final-clean/meta-evals/meta-eval-report.json",
+    "skill_package": "skill-creator-v2-workspace/ra-021-gap-closure/run-all-final-clean/dist/skill-creator-v2.skill"
+  },
+  "caveats": [
+    "Meta-evals are deterministic inline_fallback checks, not independent model execution.",
+    "Platform smoke fixtures prove fixture coverage and expected evidence contracts; runtime propagation evidence is recorded separately after installer apply.",
+    "OpenCode/opencode and VS Codium native support must remain adapter-needed unless separate runtime smoke evidence proves discovery.",
+    "Strict 10/10 behavioral claims still require broader independent with-skill and baseline/old-skill runs."
+  ]
+}

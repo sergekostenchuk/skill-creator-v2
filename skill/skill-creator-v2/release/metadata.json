@@ -1,0 +1,29 @@
+{
+  "name": "skill-creator-v2",
+  "release_metadata_schema": "skill-creator-v2.release-metadata.v1",
+  "review_interval_days": 45,
+  "schema_expectations": [
+    "references/classifier-output-schema.json",
+    "references/evidence-contract-schema.json",
+    "evals/evals.json",
+    "evals/meta-evals.json",
+    "evals/classification-golden/*.json"
+  ],
+  "required_release_artifacts": [
+    "run-all-checks.json",
+    "benchmark.json",
+    "release-benchmark.json",
+    "platform-smoke-matrix.json",
+    "install-plan.json",
+    "sanitation-report.json",
+    "final-review.md"
+  ],
+  "support_tiers": [
+    "validated_static_current",
+    "validated_static_stale",
+    "format_adapter_needed",
+    "blocked"
+  ],
+  "verified_at": "2026-07-04",
+  "publication_status": "ready_for_RA021_with_caveats"
+}

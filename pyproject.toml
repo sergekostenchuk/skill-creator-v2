@@ -1,0 +1,4 @@
+[tool.pytest.ini_options]
+testpaths = ["skill/skill-creator-v2/tests"]
+pythonpath = ["skill/skill-creator-v2"]
+addopts = "-q"

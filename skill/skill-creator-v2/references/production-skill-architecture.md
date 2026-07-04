@@ -30,6 +30,16 @@ Every production candidate must define:
 - Eval or review path.
 - Packaging/reporting path.
 
+## Risk-Derived Gates
+
+After classification, apply `references/risk-to-gate-matrix.md`. Do not rely on a broad class name such as "infra", "legal", "browser", or "design" to decide the gate. The gate comes from risk and evidence:
+
+- production infrastructure requires before-state, rollback, approval before risky mutation, command output, and post-check evidence;
+- legal high-stakes work requires jurisdiction, matter type, facts/assumptions split, dated citations, and human approval before final use;
+- security/privacy work requires secret boundary, permission boundary, redaction, supply-chain checks, and security-specific failure modes;
+- irreversible destructive work requires explicit confirmation, backup/snapshot proof, dry-run where possible, and blast-radius notes;
+- visual/client-facing and external-source work requires screenshots or artifacts, source status, originality/license checks, and human choice points when subjective direction matters.
+
 ## Progressive Disclosure
 
 Keep `SKILL.md` compact enough to be useful when loaded into context. If a section becomes procedural, move it to a reference and add a routing sentence. Avoid duplicating the same rule in both locations unless the body needs a short safety summary.

@@ -1,0 +1,25 @@
+{
+  "case_id": "CN-001",
+  "case_type": "negative",
+  "prompt": "Create a skill that reads three current documentation pages in a browser and summarizes their API differences with citations.",
+  "expected": {
+    "activity_type": ["research", "analyze"],
+    "domain": ["data_document"],
+    "tool_surface": ["browser", "external_website"],
+    "risk_profile": {
+      "primary": "external_source_freshness",
+      "secondary": []
+    },
+    "evidence_profile": ["source_citation", "decision_packet"],
+    "workflow_shape": ["single_pass"],
+    "derived_archetype": "custom_tuple",
+    "group_requirement": "single_skill",
+    "routing_path": "fast"
+  },
+  "must_not": {
+    "domain": ["browser_web"],
+    "derived_archetype": ["browser_live_inspection"],
+    "evidence_profile": ["dom_metadata", "network_log"]
+  },
+  "notes": "Reading pages in a browser is not browser live inspection unless runtime behavior is central."
+}

@@ -1,0 +1,252 @@
+{
+  "version": "2026-07-03.ra017",
+  "status": "runtime_reference",
+  "canonical_model": "multi_axis_tuple",
+  "required_axes": {
+    "activity_type": [
+      "research",
+      "analyze",
+      "design",
+      "build",
+      "transform",
+      "configure",
+      "operate",
+      "troubleshoot",
+      "validate",
+      "defend",
+      "orchestrate",
+      "publish_release",
+      "monitor",
+      "communicate"
+    ],
+    "domain": [
+      "infrastructure",
+      "network_vpn",
+      "dns_ssl_domain",
+      "deployment_devops",
+      "security",
+      "legal",
+      "design_ux",
+      "design_system",
+      "seo_discoverability",
+      "wiki_knowledge",
+      "browser_web",
+      "media_creative",
+      "skill_meta",
+      "data_document",
+      "desktop_app"
+    ],
+    "tool_surface": [
+      "filesystem",
+      "terminal",
+      "server_ssh",
+      "network_device_cli",
+      "browser",
+      "external_website",
+      "figma",
+      "api_mcp",
+      "package_manager",
+      "git_github",
+      "legal_sources",
+      "design_tools",
+      "database_query",
+      "cloud_provider",
+      "desktop_gui",
+      "image_video_tooling"
+    ],
+    "risk_profile": [
+      "low_advisory",
+      "internal_reversible",
+      "external_source_freshness",
+      "visual_client_facing",
+      "production_infrastructure",
+      "security_privacy",
+      "legal_high_stakes",
+      "financial_business",
+      "irreversible_destructive"
+    ],
+    "evidence_profile": [
+      "command_output",
+      "config_diff",
+      "test_result",
+      "screenshot",
+      "dom_metadata",
+      "network_log",
+      "source_citation",
+      "legal_citation",
+      "source_hash",
+      "package_hash",
+      "benchmark_metric",
+      "human_approval",
+      "before_after_comparison",
+      "rollback_proof",
+      "generated_artifact",
+      "visual_review",
+      "trace_log",
+      "decision_packet"
+    ],
+    "workflow_shape": [
+      "single_pass",
+      "iterative",
+      "sequential_pipeline",
+      "branching_pipeline",
+      "orchestrator_worker",
+      "independent_reviewer",
+      "evaluator_optimizer",
+      "monitoring_loop",
+      "parallel_research",
+      "human_decision_gate"
+    ]
+  },
+  "optional_axes": {
+    "catalog_family": [
+      "engineering",
+      "networking",
+      "legal",
+      "design",
+      "growth",
+      "knowledge",
+      "media",
+      "meta",
+      "operations"
+    ],
+    "specialist_role_examples": [
+      "devops_engineer",
+      "network_admin",
+      "security_analyst",
+      "lawyer",
+      "tax_defense_specialist",
+      "traffic_defense_specialist",
+      "designer",
+      "figma_operator",
+      "seo_specialist",
+      "knowledge_manager",
+      "release_manager",
+      "skill_architect"
+    ]
+  },
+  "derived_archetypes": {
+    "server_provisioning": {
+      "activity_type": ["configure", "build", "validate"],
+      "domain": ["infrastructure"],
+      "tool_surface": ["server_ssh", "terminal", "cloud_provider"],
+      "risk_profile": ["production_infrastructure"],
+      "evidence_profile": ["command_output", "config_diff", "rollback_proof", "test_result"],
+      "workflow_shape": ["sequential_pipeline"]
+    },
+    "private_network_operation": {
+      "activity_type": ["design", "configure", "validate"],
+      "domain": ["network_vpn"],
+      "tool_surface": ["terminal", "server_ssh", "filesystem"],
+      "risk_profile": ["security_privacy", "production_infrastructure"],
+      "evidence_profile": ["command_output", "config_diff", "rollback_proof", "test_result"],
+      "workflow_shape": ["sequential_pipeline", "human_decision_gate"]
+    },
+    "network_device_operation": {
+      "activity_type": ["configure", "operate", "troubleshoot", "validate"],
+      "domain": ["network_vpn"],
+      "tool_surface": ["network_device_cli"],
+      "risk_profile": ["production_infrastructure", "security_privacy"],
+      "evidence_profile": ["config_diff", "command_output", "rollback_proof", "test_result"],
+      "workflow_shape": ["sequential_pipeline", "human_decision_gate"]
+    },
+    "domain_dns_ssl_operation": {
+      "activity_type": ["configure", "validate"],
+      "domain": ["dns_ssl_domain"],
+      "tool_surface": ["browser", "api_mcp", "terminal"],
+      "risk_profile": ["production_infrastructure", "external_source_freshness"],
+      "evidence_profile": ["command_output", "source_citation", "before_after_comparison", "rollback_proof"],
+      "workflow_shape": ["sequential_pipeline"]
+    },
+    "deployment_release_operation": {
+      "activity_type": ["publish_release", "validate"],
+      "domain": ["deployment_devops"],
+      "tool_surface": ["terminal", "git_github", "server_ssh", "api_mcp"],
+      "risk_profile": ["production_infrastructure"],
+      "evidence_profile": ["command_output", "test_result", "rollback_proof", "before_after_comparison"],
+      "workflow_shape": ["sequential_pipeline", "human_decision_gate"]
+    },
+    "legal_reasoning_and_defense": {
+      "activity_type": ["research", "analyze", "defend", "communicate"],
+      "domain": ["legal"],
+      "tool_surface": ["legal_sources", "browser", "filesystem"],
+      "risk_profile": ["legal_high_stakes"],
+      "evidence_profile": ["legal_citation", "source_citation", "decision_packet", "human_approval"],
+      "workflow_shape": ["sequential_pipeline", "independent_reviewer", "human_decision_gate"]
+    },
+    "ui_reference_research": {
+      "activity_type": ["research", "analyze"],
+      "domain": ["design_ux"],
+      "tool_surface": ["browser", "external_website"],
+      "risk_profile": ["external_source_freshness", "visual_client_facing"],
+      "evidence_profile": ["screenshot", "dom_metadata", "network_log", "source_citation", "visual_review", "decision_packet"],
+      "workflow_shape": ["parallel_research", "independent_reviewer"]
+    },
+    "ui_build": {
+      "activity_type": ["design", "build", "validate"],
+      "domain": ["design_ux"],
+      "tool_surface": ["filesystem", "browser", "terminal"],
+      "risk_profile": ["visual_client_facing"],
+      "evidence_profile": ["screenshot", "test_result", "visual_review", "before_after_comparison"],
+      "workflow_shape": ["iterative", "evaluator_optimizer"]
+    },
+    "figma_canvas_operation": {
+      "activity_type": ["build", "transform", "validate"],
+      "domain": ["design_ux", "design_system"],
+      "tool_surface": ["figma"],
+      "risk_profile": ["visual_client_facing"],
+      "evidence_profile": ["screenshot", "generated_artifact", "before_after_comparison", "trace_log"],
+      "workflow_shape": ["sequential_pipeline", "independent_reviewer"]
+    },
+    "seo_semantic_core": {
+      "activity_type": ["research", "analyze", "design", "validate"],
+      "domain": ["seo_discoverability"],
+      "tool_surface": ["browser", "api_mcp", "external_website"],
+      "risk_profile": ["external_source_freshness", "financial_business"],
+      "evidence_profile": ["source_citation", "benchmark_metric", "generated_artifact", "decision_packet"],
+      "workflow_shape": ["parallel_research", "sequential_pipeline"]
+    },
+    "browser_live_inspection": {
+      "activity_type": ["analyze", "validate"],
+      "domain": ["browser_web"],
+      "tool_surface": ["browser", "external_website"],
+      "risk_profile": ["external_source_freshness"],
+      "evidence_profile": ["screenshot", "dom_metadata", "network_log", "trace_log"],
+      "workflow_shape": ["iterative"]
+    },
+    "wiki_knowledge_ingest": {
+      "activity_type": ["transform", "validate"],
+      "domain": ["wiki_knowledge"],
+      "tool_surface": ["filesystem", "api_mcp", "browser"],
+      "risk_profile": ["low_advisory", "internal_reversible"],
+      "evidence_profile": ["source_hash", "generated_artifact", "before_after_comparison", "trace_log"],
+      "workflow_shape": ["sequential_pipeline"]
+    },
+    "media_motion_generation": {
+      "activity_type": ["design", "build", "validate"],
+      "domain": ["media_creative"],
+      "tool_surface": ["image_video_tooling", "filesystem", "terminal", "api_mcp"],
+      "risk_profile": ["visual_client_facing"],
+      "evidence_profile": ["generated_artifact", "visual_review", "source_hash", "trace_log"],
+      "workflow_shape": ["iterative", "evaluator_optimizer"]
+    },
+    "skill_meta_creation": {
+      "activity_type": ["research", "design", "build", "validate", "orchestrate"],
+      "domain": ["skill_meta"],
+      "tool_surface": ["filesystem", "terminal", "git_github", "package_manager"],
+      "risk_profile": ["security_privacy", "low_advisory"],
+      "evidence_profile": ["generated_artifact", "test_result", "package_hash", "benchmark_metric", "decision_packet"],
+      "workflow_shape": ["evaluator_optimizer", "independent_reviewer"]
+    }
+  },
+  "anti_patterns": [
+    "figma_as_top_level_class",
+    "browser_as_universal_web_class",
+    "security_legal_compliance_bucket",
+    "infra_bucket_without_vps_router_dns_xray_deployment_split",
+    "lawyer_as_class_instead_of_role",
+    "human_in_loop_without_risk_analysis",
+    "done_without_evidence",
+    "group_because_many_steps_only"
+  ]
+}

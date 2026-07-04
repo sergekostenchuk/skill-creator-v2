@@ -1,0 +1,22 @@
+{
+  "case_id": "CM-001",
+  "case_type": "monotonic_risk",
+  "base_prompt": "Create a skill that drafts a server provisioning checklist.",
+  "risk_increasing_prompt": "Create a skill that logs into a live production server, runs the provisioning checklist, changes services, and must avoid downtime.",
+  "expected_base": {
+    "risk_profile": {
+      "primary": "low_advisory",
+      "secondary": []
+    },
+    "routing_path": "fast"
+  },
+  "expected_risk_increasing": {
+    "risk_profile": {
+      "primary": "production_infrastructure",
+      "secondary": ["security_privacy"]
+    },
+    "routing_path": "deep",
+    "required_evidence": ["command_output", "rollback_proof", "test_result"]
+  },
+  "notes": "Adding live production mutation must never lower risk or stay fast path."
+}

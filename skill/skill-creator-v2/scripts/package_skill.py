@@ -22,7 +22,7 @@ except ModuleNotFoundError:
     from scripts.quick_validate import validate_skill
 
 # Patterns to exclude when packaging skills.
-EXCLUDE_DIRS = {"__pycache__", "node_modules", ".pytest_cache"}
+EXCLUDE_DIRS = {"__pycache__", "node_modules", ".pytest_cache", ".github"}
 EXCLUDE_GLOBS = {"*.pyc"}
 EXCLUDE_FILES = {".DS_Store"}
 

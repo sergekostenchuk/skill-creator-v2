@@ -24,13 +24,14 @@ Targets:
   codex, claude-code, gemini, antigravity, vs-codium, qwen, zai-glm, kimi, github-copilot
 
 Options:
-  --dry-run       Show planned writes without copying files.
+  --dry-run       Show planned writes without copying files. This is the default.
+  --apply         Perform writes. Required for installation.
   --home <path>   Use a custom home directory for install targets.
 `);
 }
 
 function parseArgs(argv) {
-  const parsed = { command: argv[2] || "--help", targets: [], all: false, dryRun: false, home: os.homedir() };
+  const parsed = { command: argv[2] || "--help", targets: [], all: false, dryRun: true, home: os.homedir() };
   for (let i = 3; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === "--target") {
@@ -42,6 +43,8 @@ function parseArgs(argv) {
       parsed.all = true;
     } else if (arg === "--dry-run") {
       parsed.dryRun = true;
+    } else if (arg === "--apply") {
+      parsed.dryRun = false;
     } else if (arg === "--home") {
       const value = argv[i + 1];
       if (!value) throw new Error("--home requires a value");
@@ -180,6 +183,9 @@ function install(parsed) {
   const defs = targetDefinitions(parsed.home);
   const names = parsed.all ? Object.keys(defs) : parsed.targets;
   if (names.length === 0) throw new Error("Choose --target <target> or --all");
+  if (parsed.dryRun) {
+    console.log("dry-run mode: no files will be written. Re-run with --apply to install.");
+  }
   for (const name of names) {
     const def = defs[name];
     if (!def) throw new Error(`Unknown target: ${name}`);

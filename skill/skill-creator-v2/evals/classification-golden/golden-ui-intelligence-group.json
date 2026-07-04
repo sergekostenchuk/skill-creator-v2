@@ -1,0 +1,24 @@
+{
+  "case_id": "CG-005",
+  "case_type": "golden",
+  "prompt": "Create a UI intelligence skill group that scans award and commercial sites, follows winner links, captures screenshots, inspects DOM/technology/effects, extracts patterns, synthesizes directions, and checks originality.",
+  "expected": {
+    "activity_type": ["research", "analyze", "design", "validate", "orchestrate"],
+    "domain": ["design_ux", "browser_web"],
+    "tool_surface": ["browser", "external_website", "filesystem"],
+    "risk_profile": {
+      "primary": "external_source_freshness",
+      "secondary": ["visual_client_facing"]
+    },
+    "evidence_profile": ["screenshot", "dom_metadata", "network_log", "source_citation", "visual_review", "decision_packet"],
+    "workflow_shape": ["parallel_research", "orchestrator_worker", "independent_reviewer"],
+    "derived_archetype": "ui_reference_research",
+    "group_requirement": "orchestrator_worker",
+    "routing_path": "deep"
+  },
+  "must_not": {
+    "group_requirement": ["single_skill"],
+    "evidence_profile": ["command_output"]
+  },
+  "notes": "UI intelligence is a group because scout/extract/synthesize/review have different evidence and review roles."
+}

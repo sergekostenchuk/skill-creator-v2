@@ -1,0 +1,9 @@
+{
+  "workbench_name": "example-skill-workbench",
+  "status": "candidate",
+  "source_root": "source/example-skill",
+  "runtime_targets": [],
+  "artifacts": [],
+  "evidence": [],
+  "excluded_from_public_release": []
+}

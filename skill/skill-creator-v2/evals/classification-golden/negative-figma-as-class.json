@@ -1,0 +1,25 @@
+{
+  "case_id": "CN-002",
+  "case_type": "negative",
+  "prompt": "Create a skill that writes a design brief and says it can later be handed to Figma, but it does not read or modify any Figma file.",
+  "expected": {
+    "activity_type": ["design", "communicate"],
+    "domain": ["design_ux"],
+    "tool_surface": ["filesystem"],
+    "risk_profile": {
+      "primary": "visual_client_facing",
+      "secondary": []
+    },
+    "evidence_profile": ["generated_artifact", "decision_packet"],
+    "workflow_shape": ["single_pass"],
+    "derived_archetype": "custom_tuple",
+    "group_requirement": "single_skill",
+    "routing_path": "fast"
+  },
+  "must_not": {
+    "tool_surface": ["figma"],
+    "derived_archetype": ["figma_canvas_operation"],
+    "evidence_profile": ["before_after_comparison"]
+  },
+  "notes": "Mentioning Figma as a future destination is not Figma operation."
+}

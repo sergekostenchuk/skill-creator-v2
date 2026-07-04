@@ -2,6 +2,19 @@
 
 Use this reference for skill groups and systems where one skill coordinates workers or subagents.
 
+Also read `group-decomposition-taxonomy.md` before drafting a group. The group-level classification does not replace per-worker classification.
+
+## Group Decomposition Gate
+
+Before writing worker skills:
+
+1. Classify the parent request.
+2. Propose worker roles.
+3. Re-run classification for each worker.
+4. Define each worker's input, output, write zone, evidence, gate, failure modes, retry limit, stop rule, and context-review checkpoint.
+5. Merge workers whose boundaries are artificial.
+6. Split workers that mix production and review, use conflicting tools, or need materially different evidence contracts.
+
 ## Required Worker Contract
 
 Each worker must define:
@@ -9,11 +22,13 @@ Each worker must define:
 - Inputs: exact files/data and format.
 - Outputs: exact artifacts and location.
 - Write zone: files/directories the worker may modify.
+- Classification packet: worker-specific activity/domain/tool/risk/evidence/workflow tuple.
 - Gate: numeric or boolean acceptance criteria.
 - Failure modes: closed list from `failure-modes.md`.
 - Retry limits: max attempts and escalation path.
 - Stop rule: when the worker returns `blocked` instead of expanding scope.
 - Evidence: command output, file diff, fetched content, or review artifact.
+- Context-review checkpoint: what approved context must be carried into the next block.
 
 ## Dependency / Parallelism Table
 

@@ -1,0 +1,24 @@
+{
+  "case_id": "CG-001",
+  "case_type": "golden",
+  "prompt": "Create a skill that provisions a VPS, installs required packages, configures a service, verifies health, and records rollback steps.",
+  "expected": {
+    "activity_type": ["configure", "build", "validate"],
+    "domain": ["infrastructure"],
+    "tool_surface": ["server_ssh", "terminal"],
+    "risk_profile": {
+      "primary": "production_infrastructure",
+      "secondary": ["security_privacy"]
+    },
+    "evidence_profile": ["command_output", "config_diff", "test_result", "rollback_proof"],
+    "workflow_shape": ["sequential_pipeline", "human_decision_gate"],
+    "derived_archetype": "server_provisioning",
+    "group_requirement": "single_skill",
+    "routing_path": "deep"
+  },
+  "must_not": {
+    "domain": ["deployment_devops", "network_vpn"],
+    "derived_archetype": ["deployment_release_operation", "private_network_operation"]
+  },
+  "notes": "VPS provisioning is infrastructure with production evidence, not generic devops release or VPN."
+}

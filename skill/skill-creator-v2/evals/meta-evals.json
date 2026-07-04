@@ -1,8 +1,8 @@
 {
   "skill_name": "skill-creator-v2",
   "version": "0.1",
-  "runtime_contract": "docs/eval-runtime.md",
-  "rubric": "docs/10-10-rubric.md",
+  "runtime_contract": "project-docs/references/eval-runtime.md",
+  "rubric": "project-docs/TASK-PLAN.md#10_10_release_rubric",
   "evals": [
     {
       "id": "ME-001",
@@ -11,11 +11,7 @@
       "prompt_file": "evals/fixtures/single_skill_workflow/prompt.md",
       "expected_output_file": "evals/fixtures/single_skill_workflow/expected-output.md",
       "assertions_file": "evals/fixtures/single_skill_workflow/assertions.json",
-      "rubric_categories": [
-        "single_skill_quality",
-        "usability_quality",
-        "simplicity_friction_budget"
-      ],
+      "rubric_categories": ["single_skill_quality", "usability_quality", "simplicity_friction_budget"],
       "requires_tool_verification": false
     },
     {
@@ -25,11 +21,7 @@
       "prompt_file": "evals/fixtures/existing_skill_improvement/prompt.md",
       "expected_output_file": "evals/fixtures/existing_skill_improvement/expected-output.md",
       "assertions_file": "evals/fixtures/existing_skill_improvement/assertions.json",
-      "rubric_categories": [
-        "regression_preservation",
-        "usability_quality",
-        "evidence_integrity"
-      ],
+      "rubric_categories": ["regression_preservation", "usability_quality", "evidence_integrity"],
       "requires_tool_verification": false
     },
     {
@@ -39,11 +31,7 @@
       "prompt_file": "evals/fixtures/skill_group_design/prompt.md",
       "expected_output_file": "evals/fixtures/skill_group_design/expected-output.md",
       "assertions_file": "evals/fixtures/skill_group_design/assertions.json",
-      "rubric_categories": [
-        "skill_group_quality",
-        "usability_quality",
-        "evidence_integrity"
-      ],
+      "rubric_categories": ["skill_group_quality", "usability_quality", "evidence_integrity"],
       "requires_tool_verification": false
     },
     {
@@ -53,10 +41,7 @@
       "prompt_file": "evals/fixtures/orchestrator_worker_design/prompt.md",
       "expected_output_file": "evals/fixtures/orchestrator_worker_design/expected-output.md",
       "assertions_file": "evals/fixtures/orchestrator_worker_design/assertions.json",
-      "rubric_categories": [
-        "orchestrator_worker_quality",
-        "evidence_integrity"
-      ],
+      "rubric_categories": ["orchestrator_worker_quality", "evidence_integrity"],
       "requires_tool_verification": false
     },
     {
@@ -66,10 +51,7 @@
       "prompt_file": "evals/fixtures/missing_tool_dependency/prompt.md",
       "expected_output_file": "evals/fixtures/missing_tool_dependency/expected-output.md",
       "assertions_file": "evals/fixtures/missing_tool_dependency/assertions.json",
-      "rubric_categories": [
-        "security_tool_dependency_quality",
-        "evidence_integrity"
-      ],
+      "rubric_categories": ["security_tool_dependency_quality", "evidence_integrity"],
       "requires_tool_verification": true
     },
     {
@@ -79,10 +61,7 @@
       "prompt_file": "evals/fixtures/risky_dependency_install/prompt.md",
       "expected_output_file": "evals/fixtures/risky_dependency_install/expected-output.md",
       "assertions_file": "evals/fixtures/risky_dependency_install/assertions.json",
-      "rubric_categories": [
-        "security_tool_dependency_quality",
-        "evidence_integrity"
-      ],
+      "rubric_categories": ["security_tool_dependency_quality", "evidence_integrity"],
       "requires_tool_verification": true
     },
     {
@@ -92,10 +71,7 @@
       "prompt_file": "evals/fixtures/description_optimization/prompt.md",
       "expected_output_file": "evals/fixtures/description_optimization/expected-output.md",
       "assertions_file": "evals/fixtures/description_optimization/assertions.json",
-      "rubric_categories": [
-        "trigger_quality",
-        "regression_preservation"
-      ],
+      "rubric_categories": ["trigger_quality", "regression_preservation"],
       "requires_tool_verification": false
     },
     {
@@ -105,10 +81,7 @@
       "prompt_file": "evals/fixtures/vibe_mode/prompt.md",
       "expected_output_file": "evals/fixtures/vibe_mode/expected-output.md",
       "assertions_file": "evals/fixtures/vibe_mode/assertions.json",
-      "rubric_categories": [
-        "simplicity_friction_budget",
-        "usability_quality"
-      ],
+      "rubric_categories": ["simplicity_friction_budget", "usability_quality"],
       "requires_tool_verification": false
     }
   ]
