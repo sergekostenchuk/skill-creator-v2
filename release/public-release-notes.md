@@ -1,5 +1,33 @@
 # Public Release Notes
 
+## 0.3.0
+
+Version `0.3.0` adds hybrid skill-group visibility so skill groups do not automatically become many installed skills.
+
+Included:
+
+- `group_layout` decisions: `single_skill`, `single_visible_orchestrator_with_workers`, `multi_skill_group`, and `hybrid_group`
+- `group_membership_type` decisions: `merge_into_parent`, `internal_worker`, `reusable_satellite_skill`, and `shared_module`
+- internal worker layout using `group/workers/*/WORKER.md`
+- validation for `group/workers/registry.json`
+- rejection of nested `group/workers/**/SKILL.md`
+- reusable satellite skill guidance for capabilities that can live both inside and outside a group
+- hybrid group eval coverage through `ME-016` and a VPN internal-worker golden fixture
+
+Evidence:
+
+- staged pytest: `44 passed`
+- taxonomy fixtures: `15/15`
+- meta-evals inline fallback: `27/27`
+- `run_all_checks.py`: `8/8`
+- self-diagnostic coverage score: `0.9`
+
+Remaining caveats:
+
+- `ME-016` is a deterministic contract check, not an independent behavioral model execution
+- npm publication is not claimed until registry/auth succeeds and `npm view` confirms the new version
+- high-risk generated skill groups still need their own behavioral eval evidence
+
 ## 0.2.1
 
 Version `0.2.1` synchronizes npm with the post-publication GitHub hardening after `0.2.0`.

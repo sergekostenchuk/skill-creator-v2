@@ -33,8 +33,39 @@ Important behavior:
 - `routing_decision.path` is `fast`, `deep`, or `blocked`.
 - `blocked_reason` must be non-null when the next step requires human decision before implementation.
 - `group_requirement` is `single_skill`, `skill_group`, `orchestrator_worker`, or `blocked_for_human_decision`.
+- `group_layout` is optional and records the visibility layout: `single_skill`, `single_visible_orchestrator_with_workers`, `multi_skill_group`, or `hybrid_group`.
+- `membership_map` is optional and maps proposed roles to `merge_into_parent`, `internal_worker`, `reusable_satellite_skill`, or `shared_module`.
 
 The human-readable contract is in `references/classifier-output-contract.md`.
+
+---
+
+## group/workers/registry.json
+
+Defines hidden worker visibility for a single visible orchestrator or hybrid group.
+
+```json
+{
+  "group_layout": "hybrid_group",
+  "visible_skill": "design-intelligence-orchestrator",
+  "workers": [
+    {
+      "worker_id": "reference-source-router",
+      "path": "reference-source-router/WORKER.md",
+      "group_membership_type": "internal_worker"
+    }
+  ],
+  "shared_modules": [
+    {
+      "module_id": "source-registry",
+      "path": "../shared/source-registry.md",
+      "group_membership_type": "shared_module"
+    }
+  ]
+}
+```
+
+Rules are defined in `references/worker-group-layout.md` and validated by `scripts/quick_validate.py`.
 
 ---
 

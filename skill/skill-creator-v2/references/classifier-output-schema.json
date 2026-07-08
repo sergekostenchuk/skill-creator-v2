@@ -160,6 +160,17 @@
       "type": "string",
       "enum": ["single_skill", "skill_group", "orchestrator_worker", "blocked_for_human_decision"]
     },
+    "group_layout": {
+      "type": "string",
+      "enum": ["single_skill", "single_visible_orchestrator_with_workers", "multi_skill_group", "hybrid_group"]
+    },
+    "membership_map": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "enum": ["merge_into_parent", "internal_worker", "reusable_satellite_skill", "shared_module"]
+      }
+    },
     "human_review_required": {
       "type": "boolean"
     },

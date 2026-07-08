@@ -2,7 +2,7 @@
 
 Use this reference for skill groups and systems where one skill coordinates workers or subagents.
 
-Also read `group-decomposition-taxonomy.md` before drafting a group. The group-level classification does not replace per-worker classification.
+Also read `group-decomposition-taxonomy.md` and `worker-group-layout.md` before drafting a group. The group-level classification does not replace per-worker classification, and worker decomposition does not automatically mean every worker becomes an installed skill.
 
 ## Group Decomposition Gate
 
@@ -12,13 +12,17 @@ Before writing worker skills:
 2. Propose worker roles.
 3. Re-run classification for each worker.
 4. Define each worker's input, output, write zone, evidence, gate, failure modes, retry limit, stop rule, and context-review checkpoint.
-5. Merge workers whose boundaries are artificial.
-6. Split workers that mix production and review, use conflicting tools, or need materially different evidence contracts.
+5. Assign each role a `group_membership_type`: `merge_into_parent`, `internal_worker`, `reusable_satellite_skill`, or `shared_module`.
+6. Choose `group_layout`: `single_skill`, `single_visible_orchestrator_with_workers`, `multi_skill_group`, or `hybrid_group`.
+7. Merge workers whose boundaries are artificial.
+8. Split workers that mix production and review, use conflicting tools, or need materially different evidence contracts.
+9. Keep tightly coupled workers hidden under `group/workers/**/WORKER.md`; create standalone `SKILL.md` folders only for reusable satellite skills.
 
 ## Required Worker Contract
 
 Each worker must define:
 
+- Membership type: whether it is an internal worker, reusable satellite skill, shared module, or merged parent step.
 - Inputs: exact files/data and format.
 - Outputs: exact artifacts and location.
 - Write zone: files/directories the worker may modify.
@@ -29,6 +33,8 @@ Each worker must define:
 - Stop rule: when the worker returns `blocked` instead of expanding scope.
 - Evidence: command output, file diff, fetched content, or review artifact.
 - Context-review checkpoint: what approved context must be carried into the next block.
+
+For internal workers, the contract lives in `WORKER.md`. For reusable satellite skills, the contract is distributed across `SKILL.md`, references, scripts, and evals. `group/workers/**/SKILL.md` is invalid because it creates hidden nested installable skills and confuses runtime discovery.
 
 ## Dependency / Parallelism Table
 
@@ -65,6 +71,9 @@ File existence alone is not acceptance. A worker output file may exist and still
 
 Production skill groups must expose enough state for a coordinator or reviewer to tell what actually happened. Required fields:
 
+- group_layout: `single_visible_orchestrator_with_workers`, `multi_skill_group`, or `hybrid_group` when a group exists;
+- worker_registry: registry path and expected worker IDs;
+- membership_map: each role's `group_membership_type` and visibility rationale;
 - artifact_manifest: expected artifact path, owner, status, and verification state;
 - worker_status: pending / in_progress / done / blocked / failed;
 - commands_run: real commands or tool calls executed, not planned commands;

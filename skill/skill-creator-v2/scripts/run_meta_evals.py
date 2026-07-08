@@ -245,6 +245,23 @@ Mode:
 - vibe/lightweight draft if the user asks for it
 - no production-ready claim when gates are skipped
 """,
+        "ME-016": """# hybrid group visibility result
+
+group_layout: hybrid_group
+
+Membership map:
+- source-routing: internal_worker
+- pattern-inventory: internal_worker
+- technology-effect-inspector: reusable_satellite_skill
+- source-registry: shared_module
+- intro-copy-polish: merge_into_parent
+
+Folder result:
+- one visible installable orchestrator skill
+- internal workers use WORKER.md
+- no group/workers/**/SKILL.md
+- shared policies and registries stay shared modules
+""",
     }
     return outputs.get(eval_id, "")
 
@@ -402,6 +419,19 @@ def check_assertion(eval_id: str, assertion: dict[str, Any], skill_path: Path, o
             return ("vibe mode" in skill_md and "lightweight" in skill_md and honest_limit, "SKILL.md keeps vibe mode lightweight and honest")
         if aid.endswith("A3"):
             return ("skip heavy evidence ladder" in output_lower or "skip external-source evidence ladder" in output_lower, "sample output skips heavy evidence ladder for tiny local task")
+
+    if eval_id == "ME-016":
+        layout = read(skill_path / "references" / "worker-group-layout.md").lower()
+        validator = read(skill_path / "scripts" / "quick_validate.py").lower()
+        if aid.endswith("A1"):
+            required = ["merge_into_parent", "internal_worker", "reusable_satellite_skill", "shared_module"]
+            return (all(term in layout for term in required) and all(term in output_lower for term in required), "layout reference and sample output distinguish all group membership types")
+        if aid.endswith("A2"):
+            required = ["worker.md", "group/workers/**/skill.md", "forbidden"]
+            return (all(term in layout for term in required), "worker-group-layout forbids nested SKILL.md and requires WORKER.md for internal workers")
+        if aid.endswith("A3"):
+            required = ["validate_group_layout", "nested_skill", "registry.json"]
+            return (all(term in validator for term in required), "quick_validate.py validates group layout, nested SKILL.md leaks, and worker registry")
 
     return False, f"No deterministic check implemented for {eval_id} / {text}"
 

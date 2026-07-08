@@ -4,6 +4,8 @@ Use this reference when the classification packet suggests `skill_group` or `orc
 
 The parent classification does not replace worker classification. A group is accepted only when worker boundaries are real and each worker has its own contract.
 
+Also read `worker-group-layout.md` before creating folders. Group decomposition decides boundaries; worker group layout decides which boundaries should be visible installable skills and which should remain internal workers or shared modules.
+
 ## When A Group Is Justified
 
 Create a group only when at least one is true:
@@ -25,14 +27,27 @@ Do not create a group only because the workflow has many steps.
 3. For each worker, create a worker-specific classification packet.
 4. Extract the worker's human workflow if the worker is complex or high-risk.
 5. Define worker input, output, write zone, evidence, gates, failure modes, retry limit, and stop rule.
-6. Run merge/split review: merge weak workers; split overloaded workers.
-7. Define handoff contracts and context-review checkpoints.
-8. Define orchestrator acceptance and independent review.
-9. Define group-level evals plus worker-level evals.
+6. Assign `group_membership_type`: `merge_into_parent`, `internal_worker`, `reusable_satellite_skill`, or `shared_module`.
+7. Choose `group_layout`: `single_skill`, `single_visible_orchestrator_with_workers`, `multi_skill_group`, or `hybrid_group`.
+8. Run merge/split/visibility review: merge weak workers; split overloaded workers; hide tightly coupled workers; keep reusable capabilities installable.
+9. Define handoff contracts and context-review checkpoints.
+10. Define orchestrator acceptance and independent review.
+11. Define group-level evals plus worker-level evals.
+
+## Visibility Review
+
+After decomposition, apply this review before generating files:
+
+- If the role is just a step with the same tools, evidence, risk, and reviewer as the parent, set `group_membership_type: merge_into_parent`.
+- If the role has a real specialist boundary but no standalone user trigger, set `group_membership_type: internal_worker` and write `WORKER.md`.
+- If the role can be called directly by a future user, has independent evals, and produces value outside this group, set `group_membership_type: reusable_satellite_skill` and write a normal `SKILL.md`.
+- If the item is a registry, policy, schema, template, source list, or helper script, set `group_membership_type: shared_module`.
+
+This review is a required anti-clutter gate. The goal is not to minimize folders at any cost; the goal is to minimize installed skills while preserving true reuse.
 
 ## Worker Contract
 
-Every worker must define:
+Every internal worker must define these fields in `WORKER.md`. Every reusable satellite skill must define equivalent fields through its own `SKILL.md`, references, and evals.
 
 - `worker_id`
 - `purpose`
@@ -49,6 +64,7 @@ Every worker must define:
 - `stop_rules`
 - `handoff_packet`
 - `context_review_checkpoint`
+- `group_membership_type`
 
 ## Example
 
@@ -117,6 +133,26 @@ Merge workers when:
 - they share the same tools, evidence, risk, and reviewer;
 - handoff adds no quality;
 - group structure only adds latency.
+
+Hide workers as `internal_worker` when:
+
+- the role is meaningful only inside one parent orchestrator;
+- it lacks a standalone user trigger;
+- installing it separately would clutter runtime skill roots;
+- its evals only make sense through the parent group.
+
+Promote a role to `reusable_satellite_skill` when:
+
+- it has a standalone user trigger and useful independent output;
+- it can be tested without the parent orchestrator;
+- it is likely to be reused by other groups or single skills;
+- its dependencies, risk gates, and evidence contract are meaningful outside the parent workflow.
+
+Store shared modules when:
+
+- the artifact is a source registry, policy, schema, template, or helper script;
+- it supports multiple workers but should not be directly invoked as a skill;
+- it is better validated as data/config/reference than as a natural-language agent capability.
 
 Split workers when:
 

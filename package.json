@@ -1,6 +1,6 @@
 {
   "name": "skill-creator-v2",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "A production-grade meta-skill for creating, improving, evaluating, hardening, and packaging AI skills and skill groups.",
   "license": "Apache-2.0",
   "author": "Sergey Kostenchuk",
@@ -37,6 +37,10 @@
     "docs/",
     "release/",
     "skill/",
+    "!skill/**/.github/**",
+    "!skill/**/__pycache__/**",
+    "!skill/**/.pytest_cache/**",
+    "!skill/**/*.pyc",
     "pyproject.toml",
     "README.md",
     "CHANGELOG.md",

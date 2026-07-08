@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0
+
+- Adds the hybrid skill-group visibility model: `single_skill`, `single_visible_orchestrator_with_workers`, `multi_skill_group`, and `hybrid_group`.
+- Adds role visibility decisions: `merge_into_parent`, `internal_worker`, `reusable_satellite_skill`, and `shared_module`.
+- Adds `references/worker-group-layout.md` so tightly coupled workers can live as internal `WORKER.md` contracts instead of cluttering runtime `skills/` folders.
+- Adds deterministic validation for `group/workers/registry.json`, required `WORKER.md` fields, duplicate/missing worker entries, and forbidden nested `group/workers/**/SKILL.md`.
+- Adds hybrid group eval coverage: taxonomy fixture `CG-015` and meta-eval `ME-016` for anti-clutter group generation.
+- Updates release evidence: local pytest `44 passed`, taxonomy fixtures `15/15`, meta-evals `27/27`, and `run_all_checks.py` `8/8`.
+
 ## 0.2.1
 
 - Publishes the post-`0.2.0` behavioral grader hardening to npm.

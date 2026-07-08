@@ -83,6 +83,16 @@
       "assertions_file": "evals/fixtures/vibe_mode/assertions.json",
       "rubric_categories": ["simplicity_friction_budget", "usability_quality"],
       "requires_tool_verification": false
+    },
+    {
+      "id": "ME-016",
+      "name": "hybrid-group-visibility",
+      "fixture_dir": "evals/fixtures/hybrid_group_visibility",
+      "prompt_file": "evals/fixtures/hybrid_group_visibility/prompt.md",
+      "expected_output_file": "evals/fixtures/hybrid_group_visibility/expected-output.md",
+      "assertions_file": "evals/fixtures/hybrid_group_visibility/assertions.json",
+      "rubric_categories": ["skill_group_quality", "orchestrator_worker_quality", "simplicity_friction_budget"],
+      "requires_tool_verification": false
     }
   ]
 }

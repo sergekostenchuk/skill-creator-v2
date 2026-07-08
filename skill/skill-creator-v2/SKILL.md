@@ -38,7 +38,7 @@ Read only the references needed for the selected mode:
 | browser live inspection, runtime website evidence, Figma canvas, or design-system operations | `references/browser-live-inspection.md`, `references/figma-operation-archetype.md` |
 | external tools, MCPs, APIs, packages | `references/tool-verification.md` |
 | external-source research, live sites, current facts, screenshots, citations, or recommendations | `references/external-source-evidence.md` |
-| skill groups or delegated workers | `references/orchestrator-worker-contract.md`, `references/group-decomposition-taxonomy.md` |
+| skill groups, delegated workers, internal workers, reusable satellite skills, or shared modules | `references/orchestrator-worker-contract.md`, `references/group-decomposition-taxonomy.md`, `references/worker-group-layout.md` |
 | evals, benchmark, feedback loop | `references/eval-and-iteration.md`, `references/schemas.md` |
 | trigger description optimization | `references/description-optimization.md` |
 | final packaging/release, maintenance metadata, cross-platform smoke, or publication sanitation | `references/final-review-gate.md`, `references/maintenance-policy.md`, `references/platform-install-smoke-matrix.md` |
@@ -123,9 +123,19 @@ For external-source skills, do not accept catalog cards, source names, hero-only
 
 ## Skill Group And Orchestrator-Worker Rules
 
-For groups and worker systems, read `references/orchestrator-worker-contract.md` before drafting. The output must include:
+For groups and worker systems, read `references/orchestrator-worker-contract.md`, `references/group-decomposition-taxonomy.md`, and `references/worker-group-layout.md` before drafting. First decide the smallest truthful visible layout:
+
+- `single_skill`
+- `single_visible_orchestrator_with_workers`
+- `multi_skill_group`
+- `hybrid_group`
+
+For every candidate role, assign `group_membership_type`: `merge_into_parent`, `internal_worker`, `reusable_satellite_skill`, or `shared_module`. Do not create standalone installed skills for tightly coupled internal roles. Use internal `WORKER.md` contracts for hidden workers and standalone `SKILL.md` only when the role passes the reusable satellite test.
+
+The output must include:
 
 - Skill or worker boundaries.
+- Runtime visibility: which folders become installed skills, which remain internal workers, and which are shared modules.
 - Worker-specific classification packets.
 - Write zones.
 - Dependency/parallelism table.

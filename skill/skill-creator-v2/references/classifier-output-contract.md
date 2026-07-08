@@ -49,6 +49,12 @@ The classifier output is a decision packet. It is not a final skill and it is no
   "failure_modes": ["tool_unavailable", "external_source_unreachable", "insufficient_evidence"],
   "eval_strategy": ["golden_classification_fixture", "negative_overprocessing_fixture"],
   "group_requirement": "skill_group",
+  "group_layout": "hybrid_group",
+  "membership_map": {
+    "award-reference-scout": "internal_worker",
+    "technology-effect-inspector": "reusable_satellite_skill",
+    "source-registry": "shared_module"
+  },
   "human_review_required": true,
   "routing_decision": {
     "path": "deep",
@@ -77,6 +83,8 @@ The classifier output is a decision packet. It is not a final skill and it is no
 - `failure_modes`: closed taxonomy values, or proposed additions that must be reviewed.
 - `eval_strategy`: what evals are needed for this request type.
 - `group_requirement`: `single_skill`, `skill_group`, `orchestrator_worker`, or `blocked_for_human_decision`.
+- `group_layout`: optional layout decision; use `single_skill`, `single_visible_orchestrator_with_workers`, `multi_skill_group`, or `hybrid_group`.
+- `membership_map`: optional role-to-visibility map; values are `merge_into_parent`, `internal_worker`, `reusable_satellite_skill`, or `shared_module`.
 - `human_review_required`: boolean.
 - `routing_decision.path`: `fast`, `deep`, or `blocked`.
 - `routing_decision.reason`: why that path is selected.

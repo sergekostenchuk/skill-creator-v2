@@ -22,6 +22,8 @@ EXPECTED_MODES = {
     "package-report",
 }
 EXPECTED_GROUP_REQUIREMENTS = {"single_skill", "skill_group", "orchestrator_worker", "blocked_for_human_decision"}
+EXPECTED_GROUP_LAYOUTS = {"single_skill", "single_visible_orchestrator_with_workers", "multi_skill_group", "hybrid_group"}
+EXPECTED_GROUP_MEMBERSHIP_TYPES = {"merge_into_parent", "internal_worker", "reusable_satellite_skill", "shared_module"}
 EXPECTED_ROUTING_PATHS = {"fast", "deep", "blocked"}
 EXPECTED_EVIDENCE_REFERENCES = {
     "evidence-contract-schema.json",
@@ -30,6 +32,7 @@ EXPECTED_EVIDENCE_REFERENCES = {
     "workbench-source-runtime-model.md",
     "workbench-lifecycle.md",
     "context-reviewer-gate.md",
+    "worker-group-layout.md",
 }
 EXPECTED_PLATFORM_SMOKE_FIXTURES = {
     "platform-smoke-codex",
@@ -74,6 +77,8 @@ def collect_taxonomy_coverage(fixtures_dir: Path) -> dict[str, Any]:
         "workflow_shape": set(),
         "derived_archetype": set(),
         "group_requirement": set(),
+        "group_layout": set(),
+        "group_membership_type": set(),
         "routing_path": set(),
     }
     files = sorted(fixtures_dir.glob("*.json"))
@@ -93,6 +98,10 @@ def collect_taxonomy_coverage(fixtures_dir: Path) -> dict[str, Any]:
             coverage["risk_profile"].update(normalize_list(risk.get("secondary")))
         coverage["derived_archetype"].update(normalize_list(expected.get("derived_archetype")))
         coverage["group_requirement"].update(normalize_list(expected.get("group_requirement")))
+        coverage["group_layout"].update(normalize_list(expected.get("group_layout")))
+        membership_map = expected.get("membership_map", {})
+        if isinstance(membership_map, dict):
+            coverage["group_membership_type"].update(normalize_list(list(membership_map.values())))
         coverage["routing_path"].update(normalize_list(expected.get("routing_path")))
 
     return {
@@ -172,7 +181,7 @@ def score_report(
 ) -> tuple[float, list[str]]:
     warnings: list[str] = []
     points = 0
-    total = 8
+    total = 10
 
     if taxonomy["fixture_count"] >= 12 and not taxonomy["errors"]:
         points += 1
@@ -186,6 +195,14 @@ def score_report(
         points += 1
     else:
         warnings.append("single/group/orchestrator group-requirement coverage is incomplete")
+    if EXPECTED_GROUP_LAYOUTS <= set(taxonomy["coverage"]["group_layout"]):
+        points += 1
+    else:
+        warnings.append("group layout coverage is incomplete")
+    if EXPECTED_GROUP_MEMBERSHIP_TYPES <= set(taxonomy["coverage"]["group_membership_type"]):
+        points += 1
+    else:
+        warnings.append("group membership type coverage is incomplete")
     if len(taxonomy["coverage"]["risk_profile"]) >= 5:
         points += 1
     else:

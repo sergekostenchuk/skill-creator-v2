@@ -14,6 +14,7 @@
     "workflow_shape": ["sequential_pipeline", "human_decision_gate"],
     "derived_archetype": "network_device_operation",
     "group_requirement": "single_skill",
+    "group_layout": "single_skill",
     "routing_path": "deep"
   },
   "must_not": {

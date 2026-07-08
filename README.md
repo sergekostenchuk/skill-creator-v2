@@ -9,6 +9,7 @@ It turns skill creation from an improvised writing task into a structured engine
 ## What It Does
 
 - Creates single skills, skill groups, and orchestrator-worker systems.
+- Separates visible skills from internal workers, reusable satellite skills, and shared modules.
 - Improves existing skills while preserving behavior and regression evidence.
 - Verifies tool, MCP, API, and package dependencies before relying on them.
 - Blocks unsafe dependency assumptions such as unpinned `latest` installs.
@@ -88,6 +89,17 @@ Use skill-creator-v2.
 
 Create a skill group for UI intelligence: research references, extract patterns, synthesize design directions, and guard originality.
 ```
+
+## Hybrid Skill Groups
+
+Skill Creator V2 does not treat every worker as a new installed skill. For groups, it now decides the runtime visibility of each role:
+
+- `merge_into_parent`: a step that should stay inside the parent skill.
+- `internal_worker`: a real worker with a `WORKER.md` contract, hidden inside one visible orchestrator.
+- `reusable_satellite_skill`: a standalone skill that also participates in the group.
+- `shared_module`: policy, schema, registry, template, or helper data that is not a skill.
+
+This keeps runtime `skills/` folders clean while preserving true reuse. A hybrid group can have one visible orchestrator, internal workers under `group/workers/`, reusable satellite skills, and shared modules under `group/shared/`.
 
 ## What To Expect
 

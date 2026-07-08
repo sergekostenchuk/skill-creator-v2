@@ -7,7 +7,9 @@
     "references/evidence-contract-schema.json",
     "evals/evals.json",
     "evals/meta-evals.json",
-    "evals/classification-golden/*.json"
+    "evals/classification-golden/*.json",
+    "group/workers/registry.json",
+    "group/workers/*/WORKER.md"
   ],
   "required_release_artifacts": [
     "run-all-checks.json",
@@ -24,8 +26,6 @@
     "format_adapter_needed",
     "blocked"
   ],
-  "verified_at": "2026-07-04",
-  "publication_status": "ready_for_RA024_patch_publication",
-  "current_package_version": "0.2.1",
-  "latest_release_evidence": "release/benchmark.json"
+  "verified_at": "2026-07-09",
+  "publication_status": "RA025_0.3.0_source_ready_publication_pending"
 }

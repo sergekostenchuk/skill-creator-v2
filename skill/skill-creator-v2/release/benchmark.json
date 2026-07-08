@@ -1,29 +1,19 @@
 {
   "benchmark_schema": "skill-creator-v2.benchmark.v1",
-  "generated_at": "2026-07-04T01:18:59.718Z",
-  "run_id": "RA-023",
+  "generated_at": "2026-07-08T23:49:45.673Z",
+  "run_id": "RA-025",
   "release_candidate": {
     "skill_name": "skill-creator-v2",
-    "package_version": "0.2.1",
-    "purpose": "patch release synchronizing npm package with post-publication behavioral grader hardening and RA-023 evidence",
-    "version_policy": "publish as v0.2.1 because npm v0.2.0 was published before the post-publication grader oracle hardening commit"
+    "package_version": "0.3.0",
+    "purpose": "minor release candidate adding the hybrid skill group visibility model for internal workers, reusable satellite skills, shared modules, and anti-clutter group generation",
+    "version_policy": "0.3.0 because RA-025 changes skill-group generation behavior rather than only patching release evidence"
   },
   "public_repository": {
     "url": "https://github.com/sergekostenchuk/skill-creator-v2",
-    "evidence_commit": "1d2674dc204221c0cd9bfe236b1e2d29724920c7",
-    "evidence_commit_summary": "Add CI and harden behavioral grading",
+    "evidence_commit": "pending_RA025_public_commit",
     "ci_workflow": ".github/workflows/test.yml",
-    "ci_run_url": "https://github.com/sergekostenchuk/skill-creator-v2/actions/runs/28689873987",
-    "ci_conclusion": "success",
-    "ci_matrix": [
-      "python-3.11 / node-20",
-      "python-3.12 / node-20"
-    ],
-    "ci_commands": [
-      "pytest",
-      "npm test --silent",
-      "npm pack --dry-run --json"
-    ]
+    "ci_run_url": "pending_after_push",
+    "ci_conclusion": "pending_after_push"
   },
   "runtime_modes": {
     "run_all_checks": "local_release_check_runner",
@@ -31,10 +21,8 @@
     "taxonomy_classification": "deterministic_fixture_validation",
     "meta_evals_static": "inline_fallback_contract_checks",
     "self_diagnose": "deterministic_self_diagnostic_advisory",
-    "platform_smoke_fixtures": "fixture_schema_validation",
-    "behavioral_independent": "behavioral_recorded_outputs_multi_agent_v1",
-    "package_runtime_smoke": "temp_home_and_npm_tarball_install_smoke",
-    "native_cli_smoke": "native_cli_version_help_smoke"
+    "group_layout_validation": "write_free_quick_validate_contract_checks",
+    "package_runtime_smoke": "pending_public_package_smoke"
   },
   "summary": {
     "release_ready_checks_passed": true,
@@ -46,113 +34,55 @@
       "pass_rate": 1
     },
     "pytest": {
-      "local_result": "39 passed",
-      "ci_result": "success",
+      "local_result": "44 passed",
       "runner_metadata": "pyproject.toml"
     },
-    "npm": {
-      "test_result": "passed",
-      "pack_dry_run_result": "passed",
-      "target_package_version": "0.2.1"
-    },
     "taxonomy_classification": {
-      "passed": 14,
+      "passed": 15,
       "failed": 0,
-      "total": 14
+      "total": 15,
+      "group_layout_coverage": [
+        "single_skill",
+        "single_visible_orchestrator_with_workers",
+        "multi_skill_group",
+        "hybrid_group"
+      ]
     },
     "meta_evals_inline": {
-      "assertions_passed": 24,
-      "assertions_total": 24,
-      "eval_count": 8,
+      "assertions_passed": 27,
+      "assertions_total": 27,
+      "eval_count": 9,
       "pass_rate": 1,
+      "added_eval": "ME-016 hybrid-group-visibility",
       "claim_level": "static_contract_check_only"
     },
-    "behavioral_independent": {
-      "eval_run_count": 17,
-      "assertions_passed": 51,
-      "assertions_total": 51,
-      "pass_rate": 1,
-      "runtime_mode": "behavioral_recorded_outputs",
-      "executor_runtime": "multi_agent_v1",
-      "inline_fallback_counts_as_behavioral": false,
-      "missing_or_failed_runs": 0
-    },
     "self_diagnose": {
-      "coverage_score": 0.875,
+      "coverage_score": 0.9,
       "severity": "pass",
-      "interpretation": "advisory coverage signal; remaining warning is meta-eval mode coverage gap for eval-benchmark and package-report"
+      "interpretation": "advisory coverage signal; independent behavioral evals remain required for 10/10 claims"
     },
-    "platform_smoke_fixtures": {
-      "present": 3,
-      "required": 3,
-      "fixture_names": [
-        "platform-smoke-adapter-needed",
-        "platform-smoke-codex",
-        "platform-smoke-portable"
-      ]
+    "group_layout_validation": {
+      "valid_internal_worker_layout_tests": 5,
+      "nested_worker_skill_leak_rejected": true,
+      "registry_consistency_checked": true,
+      "package_refuses_invalid_layout": true
     },
-    "package_runtime_smoke": {
-      "temp_home_install": {
-        "passed": true,
-        "target_count": 9,
-        "skill_folder_count": 14,
-        "agents_projection_count": 4,
-        "real_runtime_roots_mutated": false
-      },
-      "npm_tarball_install": {
-        "passed": true,
-        "target_count": 9,
-        "installed_skill_folder_count": 14,
-        "cli_help_contains_usage": true
-      },
-      "targets": [
-        "codex",
-        "claude-code",
-        "gemini",
-        "antigravity",
-        "vs-codium",
-        "qwen",
-        "zai-glm",
-        "kimi",
-        "github-copilot"
-      ]
-    },
-    "native_cli_smoke": {
-      "passed_count": 7,
-      "platform_count": 10,
-      "passed": [
-        "codex",
-        "claude-code",
-        "gemini",
-        "opencode",
-        "kimi",
-        "github-copilot",
-        "vs-codium"
-      ],
-      "unavailable_or_failed": [
-        "antigravity",
-        "qwen",
-        "zai-glm"
-      ],
-      "scope": "safe --version/--help availability only; not end-to-end native skill auto-loading proof"
+    "npm": {
+      "target_package_version": "0.3.0",
+      "publication_status": "not_published_in_RA025_local_sync",
+      "registry_latest_before_publish": "0.2.0_known_from_RA024"
     }
   },
   "artifacts": {
-    "run_all_checks": "skill-creator-v2-workspace/ra-023-ci-behavioral/run-all-staging-final/run-all-checks.json",
-    "taxonomy_report": "skill-creator-v2-workspace/ra-023-ci-behavioral/run-all-staging-final/taxonomy-classification-report.json",
-    "self_diagnose_report": "skill-creator-v2-workspace/ra-023-ci-behavioral/run-all-staging-final/self-diagnose.json",
-    "meta_eval_report": "skill-creator-v2-workspace/ra-023-ci-behavioral/run-all-staging-final/meta-evals/meta-eval-report.json",
-    "behavioral_eval_report": "skill-creator-v2-workspace/ra-023-ci-behavioral/behavioral-eval-report.json",
-    "platform_runtime_smoke_report": "skill-creator-v2-workspace/ra-023-ci-behavioral/platform-runtime-smoke-report.json",
-    "npm_tarball_smoke_report": "skill-creator-v2-workspace/ra-023-ci-behavioral/npm-tarball-smoke/npm-tarball-smoke-report.json",
-    "native_cli_smoke_report": "skill-creator-v2-workspace/ra-023-ci-behavioral/native-cli-runtime-smoke-report.json",
-    "ra023_human_report": "reports/skill-creator-v2-ra023-ci-behavioral-report.md"
+    "run_all_checks": "skill-creator-v2-workspace/ra-025-hybrid-group/run-all-checks.json",
+    "taxonomy_report": "skill-creator-v2-workspace/ra-025-hybrid-group/taxonomy-classification-report.json",
+    "self_diagnose_report": "skill-creator-v2-workspace/ra-025-hybrid-group/self-diagnose.json",
+    "meta_eval_report": "skill-creator-v2-workspace/ra-025-hybrid-group/meta-evals/meta-eval-report.json",
+    "ra025_human_report": "reports/skill-creator-v2-ra025-hybrid-group-report.md"
   },
   "caveats": [
-    "Meta-evals still include deterministic inline_fallback contract checks; they are not counted as independent behavioral proof.",
-    "Independent behavioral proof now exists for the current public meta-eval corpus: 17 actual executor outputs and 51/51 assertions passed.",
-    "Package/runtime smoke proves installer behavior in temp-home and npm-tarball modes; it does not prove native skill auto-loading inside every client.",
-    "Native CLI smoke passed for 7/10 locally available clients; Antigravity, QWEN, and Z.AI GLM CLIs were unavailable in this environment.",
-    "Future generated-skill generalization still requires new behavioral evals for each high-risk skill or skill group."
+    "ME-016 is a deterministic inline_fallback contract check, not independent behavioral model execution.",
+    "The feature prevents unnecessary installed skill proliferation through contract/tooling checks, but future generated groups still need real behavioral evals for high-risk production claims.",
+    "npm publication is not claimed until registry/auth succeeds and npm view confirms the new version."
   ]
 }

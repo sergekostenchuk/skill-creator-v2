@@ -17,6 +17,8 @@ from typing import Any
 
 
 GROUP_REQUIREMENTS = {"single_skill", "skill_group", "orchestrator_worker", "blocked_for_human_decision"}
+GROUP_LAYOUTS = {"single_skill", "single_visible_orchestrator_with_workers", "multi_skill_group", "hybrid_group"}
+GROUP_MEMBERSHIP_TYPES = {"merge_into_parent", "internal_worker", "reusable_satellite_skill", "shared_module"}
 ROUTING_PATHS = {"fast", "deep", "blocked"}
 CASE_TYPES = {"golden", "negative", "monotonic_risk"}
 RISK_ORDER = {
@@ -51,6 +53,11 @@ def has_forbidden(expected: dict[str, Any], field: str, forbidden: list[str]) ->
         present = [expected.get("derived_archetype")]
     elif field == "group_requirement":
         present = [expected.get("group_requirement")]
+    elif field == "group_layout":
+        present = [expected.get("group_layout")]
+    elif field == "membership_map":
+        membership_map = expected.get("membership_map", {})
+        present = list(membership_map.values()) if isinstance(membership_map, dict) else []
     elif field == "routing_path":
         present = [expected.get("routing_path")]
     elif field == "risk_profile":
@@ -113,6 +120,19 @@ def validate_expected(case_id: str, expected: dict[str, Any], taxonomy: dict[str
     group_requirement = expected.get("group_requirement")
     if group_requirement not in GROUP_REQUIREMENTS:
         errors.append(f"{case_id}: unknown group_requirement {group_requirement!r}")
+
+    group_layout = expected.get("group_layout")
+    if group_layout is not None and group_layout not in GROUP_LAYOUTS:
+        errors.append(f"{case_id}: unknown group_layout {group_layout!r}")
+
+    membership_map = expected.get("membership_map", {})
+    if membership_map:
+        if not isinstance(membership_map, dict):
+            errors.append(f"{case_id}: expected.membership_map must be object")
+        else:
+            for role, membership in membership_map.items():
+                if membership not in GROUP_MEMBERSHIP_TYPES:
+                    errors.append(f"{case_id}: membership_map role {role!r} has unknown type {membership!r}")
 
     routing_path = expected.get("routing_path")
     if routing_path not in ROUTING_PATHS:

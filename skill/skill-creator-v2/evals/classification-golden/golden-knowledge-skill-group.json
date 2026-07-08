@@ -35,6 +35,7 @@
     ],
     "derived_archetype": "custom_tuple",
     "group_requirement": "skill_group",
+    "group_layout": "multi_skill_group",
     "routing_path": "deep"
   },
   "must_not": {

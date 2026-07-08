@@ -1,0 +1,33 @@
+{
+  "case_id": "CG-015",
+  "case_type": "golden",
+  "prompt": "Create one visible senior Xray VPN architect skill, but keep its config planner, leak-test reviewer, and rollback verifier as internal workers so my runtime skills folder does not get three extra standalone skills.",
+  "expected": {
+    "activity_type": ["design", "configure", "validate", "orchestrate"],
+    "domain": ["network_vpn"],
+    "tool_surface": ["terminal", "server_ssh", "filesystem"],
+    "risk_profile": {
+      "primary": "security_privacy",
+      "secondary": ["production_infrastructure"]
+    },
+    "evidence_profile": ["command_output", "config_diff", "test_result", "rollback_proof", "decision_packet"],
+    "workflow_shape": ["sequential_pipeline", "orchestrator_worker", "independent_reviewer", "human_decision_gate"],
+    "derived_archetype": "private_network_operation",
+    "group_requirement": "orchestrator_worker",
+    "group_layout": "single_visible_orchestrator_with_workers",
+    "membership_map": {
+      "config-planner": "internal_worker",
+      "leak-test-reviewer": "internal_worker",
+      "rollback-verifier": "internal_worker",
+      "provider-port-matrix": "shared_module",
+      "basic-readme-polish": "merge_into_parent"
+    },
+    "routing_path": "deep"
+  },
+  "must_not": {
+    "group_layout": ["multi_skill_group"],
+    "membership_map": ["reusable_satellite_skill"],
+    "derived_archetype": ["server_provisioning"]
+  },
+  "notes": "This is the anti-clutter layout: one installable skill with internal WORKER.md contracts, not multiple standalone VPN helper skills."
+}

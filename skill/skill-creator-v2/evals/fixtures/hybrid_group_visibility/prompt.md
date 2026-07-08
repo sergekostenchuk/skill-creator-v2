@@ -1,0 +1,1 @@
+Create a UI intelligence group. Keep tightly coupled scout/extractor/reviewer roles inside the main orchestrator so the runtime skills folder stays clean, but create a reusable technology/effect inspector that can also be used outside this group. Shared source registries and originality policies must not become skills.

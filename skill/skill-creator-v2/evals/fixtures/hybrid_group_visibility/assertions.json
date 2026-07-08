@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ME-016-A1",
+    "text": "The output distinguishes merge_into_parent, internal_worker, reusable_satellite_skill, and shared_module.",
+    "failure_mode": "overproduced_standalone_skills"
+  },
+  {
+    "id": "ME-016-A2",
+    "text": "The skill documentation forbids nested SKILL.md files under internal worker folders and requires WORKER.md for hidden workers.",
+    "failure_mode": "nested_skill_leak"
+  },
+  {
+    "id": "ME-016-A3",
+    "text": "The deterministic tooling validates worker registry consistency and rejects nested worker SKILL.md leaks before packaging.",
+    "failure_mode": "missing_tooling_gate"
+  }
+]
