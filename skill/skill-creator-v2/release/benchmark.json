@@ -10,10 +10,11 @@
   },
   "public_repository": {
     "url": "https://github.com/sergekostenchuk/skill-creator-v2",
-    "evidence_commit": "pending_RA025_public_commit",
+    "evidence_commit": "237c44b4924e38b9dd4e9378db20b5203fe83714",
     "ci_workflow": ".github/workflows/test.yml",
-    "ci_run_url": "pending_after_push",
-    "ci_conclusion": "pending_after_push"
+    "ci_run_url": "https://github.com/sergekostenchuk/skill-creator-v2/actions/runs/28984119597",
+    "ci_conclusion": "success",
+    "evidence_commit_summary": "Add hybrid skill group visibility model"
   },
   "runtime_modes": {
     "run_all_checks": "local_release_check_runner",
@@ -71,6 +72,11 @@
       "target_package_version": "0.3.0",
       "publication_status": "not_published_in_RA025_local_sync",
       "registry_latest_before_publish": "0.2.0_known_from_RA024"
+    },
+    "github_actions": {
+      "run_id": 28984119597,
+      "conclusion": "success",
+      "head_sha": "237c44b4924e38b9dd4e9378db20b5203fe83714"
     }
   },
   "artifacts": {
